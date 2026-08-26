@@ -1,1561 +1,2074 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Drop #01 · La Pegajosa — CHURREARG</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
-
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <meta http-equiv="Referrer-Policy" content="no-referrer">
 
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+
 <!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
 :root{
---black:#000;
---gold:#C9A84C;
---gold-light:#e8c96e;
---gold-dark:#9a7a30;
---carbon:#1e1e1e;
---smoke:#111;
---text:#e8e8e8;
---muted:#666;
+  --black:#000;
+  --gold:#C9A84C;
+  --gold-light:#e8c96e;
+  --gold-dark:#9a7a30;
+  --carbon:#1e1e1e;
+  --smoke:#111;
+  --text:#e8e8e8;
+  --muted:#666;
 }
 
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
--webkit-tap-highlight-color:transparent;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
 html{
-scroll-behavior:smooth;
+  scroll-behavior:smooth;
 }
 
 body{
-background:var(--black);
-color:var(--text);
-font-family:'Montserrat',sans-serif;
-font-weight:300;
-overflow-x:hidden;
-cursor:none;
+  background:var(--black);
+  color:var(--text);
+  font-family:'Montserrat',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+  cursor:none;
 }
 
 @media(max-width:768px){
-body{cursor:auto;}
+  body{
+    cursor:auto;
+  }
 }
 
+/* =========================================================
+   CURSOR
+========================================================= */
+
 .cursor{
-width:10px;
-height:10px;
-background:var(--gold);
-border-radius:50%;
-position:fixed;
-pointer-events:none;
-z-index:9999;
-transform:translate(-50%,-50%);
-mix-blend-mode:difference;
+  width:10px;
+  height:10px;
+  background:var(--gold);
+  border-radius:50%;
+  position:fixed;
+  pointer-events:none;
+  z-index:9999;
+  transform:translate(-50%,-50%);
+  mix-blend-mode:difference;
 }
 
 .cursor-ring{
-width:34px;
-height:34px;
-border:1px solid rgba(201,168,76,.5);
-border-radius:50%;
-position:fixed;
-pointer-events:none;
-z-index:9998;
-transform:translate(-50%,-50%);
-transition:all .14s ease;
+  width:34px;
+  height:34px;
+  border:1px solid rgba(201,168,76,.5);
+  border-radius:50%;
+  position:fixed;
+  pointer-events:none;
+  z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:all .14s ease;
 }
 
 @media(max-width:768px){
-.cursor,.cursor-ring{display:none;}
+  .cursor,
+  .cursor-ring{
+    display:none;
+  }
 }
+
+/* =========================================================
+   TEXTURE
+========================================================= */
 
 body::before{
-content:'';
-position:fixed;
-inset:0;
-background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-pointer-events:none;
-z-index:9990;
-opacity:.4;
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:9990;
+  opacity:.4;
 }
 
-/* AGE GATE */
+/* =========================================================
+   ACCESS GATE
+========================================================= */
 
-#age-gate{
-position:fixed;
-inset:0;
-z-index:99999;
-background:#000;
-display:flex;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-padding:32px 24px;
-text-align:center;
+#access-gate{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  padding:32px 24px;
+  text-align:center;
 }
 
-#age-gate.hidden{
-display:none;
+#access-gate.hidden{
+  display:none;
 }
 
 .ag-logo{
-font-family:'Cinzel',serif;
-font-size:clamp(22px,6vw,32px);
-font-weight:900;
-letter-spacing:.12em;
-background:linear-gradient(135deg,#e8c96e,#C9A84C,#9a7a30);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-background-clip:text;
-margin-bottom:28px;
+  font-family:'Cinzel',serif;
+  font-size:clamp(22px,6vw,32px);
+  font-weight:900;
+  letter-spacing:.12em;
+  background:linear-gradient(
+    135deg,
+    #e8c96e,
+    #C9A84C,
+    #9a7a30
+  );
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin-bottom:28px;
 }
 
 .ag-line{
-width:36px;
-height:1px;
-background:rgba(201,168,76,.3);
-margin:0 auto 28px;
+  width:36px;
+  height:1px;
+  background:rgba(201,168,76,.3);
+  margin:0 auto 28px;
 }
 
 .ag-title{
-font-family:'Cinzel',serif;
-font-size:clamp(18px,5vw,28px);
-font-weight:700;
-color:#fff;
-line-height:1.2;
-margin-bottom:12px;
+  font-family:'Cinzel',serif;
+  font-size:clamp(18px,5vw,28px);
+  font-weight:700;
+  color:#fff;
+  line-height:1.2;
+  margin-bottom:12px;
 }
 
 .ag-sub{
-font-family:'Playfair Display',serif;
-font-style:italic;
-font-size:clamp(13px,3vw,16px);
-color:#555;
-margin-bottom:36px;
-max-width:360px;
-line-height:1.7;
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:clamp(13px,3vw,16px);
+  color:#555;
+  margin-bottom:36px;
+  max-width:360px;
+  line-height:1.7;
 }
 
-.ag-btns{
-display:flex;
-flex-direction:column;
-gap:12px;
-width:100%;
-max-width:300px;
+.access-form{
+  width:100%;
+  max-width:320px;
 }
 
-.ag-btn{
-padding:18px 24px;
-font-family:'Montserrat',sans-serif;
-font-size:10px;
-font-weight:600;
-letter-spacing:.4em;
-text-transform:uppercase;
-border:1px solid #C9A84C;
-background:transparent;
-color:#C9A84C;
-cursor:pointer;
-position:relative;
-overflow:hidden;
-transition:color .35s;
+#vipCode{
+  width:100%;
+  padding:18px;
+  margin-bottom:12px;
+  background:#111;
+  border:1px solid rgba(201,168,76,.3);
+  color:#fff;
+  text-align:center;
+  font-family:'Montserrat',sans-serif;
+  font-size:11px;
+  letter-spacing:.25em;
+  outline:none;
+  text-transform:uppercase;
 }
 
-.ag-btn::before{
-content:'';
-position:absolute;
-inset:0;
-background:#C9A84C;
-transform:translateX(-101%);
-transition:transform .35s cubic-bezier(.77,0,.18,1);
-z-index:0;
+#vipCode:focus{
+  border-color:#C9A84C;
+  box-shadow:0 0 20px rgba(201,168,76,.08);
 }
 
-.ag-btn:hover{
-color:#000;
+#accessBtn{
+  width:100%;
+  padding:18px 24px;
+  border:1px solid #C9A84C;
+  background:transparent;
+  color:#C9A84C;
+  cursor:pointer;
+  font-family:'Montserrat',sans-serif;
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.4em;
+  text-transform:uppercase;
+  transition:.3s;
 }
 
-.ag-btn:hover::before{
-transform:translateX(0);
+#accessBtn:hover{
+  background:#C9A84C;
+  color:#000;
 }
 
-.ag-btn span{
-position:relative;
-z-index:1;
+#accessBtn:disabled{
+  opacity:.4;
+  cursor:wait;
 }
 
-.ag-btn-no{
-padding:18px 24px;
-font-family:'Montserrat',sans-serif;
-font-size:10px;
-font-weight:600;
-letter-spacing:.4em;
-text-transform:uppercase;
-border:1px solid rgba(255,255,255,.1);
-background:transparent;
-color:#444;
-cursor:pointer;
+#accessMessage{
+  min-height:20px;
+  margin-top:18px;
+  font-size:10px;
+  letter-spacing:.15em;
+  color:#777;
+  line-height:1.6;
 }
 
-.ag-deny{
-display:none;
-margin-top:44px;
+#accessMessage.error{
+  color:#b66;
 }
 
-.ag-deny.visible{
-display:block;
-}
-
-.ag-deny-text{
-font-family:'Playfair Display',serif;
-font-style:italic;
-font-size:16px;
-color:#444;
-line-height:1.7;
+#accessMessage.success{
+  color:#C9A84C;
 }
 
 .ag-legal{
-position:absolute;
-bottom:18px;
-left:0;
-right:0;
-font-size:9px;
-letter-spacing:.18em;
-color:#2a2a2a;
-text-transform:uppercase;
-text-align:center;
-padding:0 16px;
+  position:absolute;
+  bottom:18px;
+  left:0;
+  right:0;
+  font-size:9px;
+  letter-spacing:.18em;
+  color:#2a2a2a;
+  text-transform:uppercase;
+  text-align:center;
+  padding:0 16px;
 }
 
-/* HERO */
+/* =========================================================
+   USER BADGE
+========================================================= */
+
+#userBadge{
+  position:fixed;
+  top:20px;
+  right:20px;
+  z-index:5000;
+  padding:10px 14px;
+  border:1px solid rgba(201,168,76,.2);
+  background:rgba(0,0,0,.75);
+  backdrop-filter:blur(10px);
+  font-size:8px;
+  letter-spacing:.18em;
+  color:var(--gold);
+  text-transform:uppercase;
+  display:none;
+}
+
+#userBadge.visible{
+  display:block;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
 
 .hero{
-min-height:100svh;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-position:relative;
-padding:80px 24px 60px;
-overflow:hidden;
-text-align:center;
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  padding:80px 24px 60px;
+  overflow:hidden;
+  text-align:center;
 }
 
 .hero::before{
-content:'';
-position:absolute;
-inset:0;
-background:radial-gradient(ellipse 75% 55% at 50% 50%,rgba(201,168,76,.08) 0%,transparent 65%);
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(
+      ellipse 75% 55% at 50% 50%,
+      rgba(201,168,76,.08) 0%,
+      transparent 65%
+    );
 }
 
 .smoke-bg{
-position:absolute;
-inset:0;
-pointer-events:none;
-overflow:hidden;
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
 }
 
 .sp{
-position:absolute;
-bottom:-100px;
-border-radius:50%;
-background:radial-gradient(circle,rgba(201,168,76,.045) 0%,transparent 70%);
-animation:spRise linear infinite;
+  position:absolute;
+  bottom:-100px;
+  border-radius:50%;
+  background:
+    radial-gradient(
+      circle,
+      rgba(201,168,76,.045) 0%,
+      transparent 70%
+    );
+  animation:spRise linear infinite;
 }
 
 @keyframes spRise{
-0%{transform:translateY(0) scale(.4);opacity:0;}
-10%{opacity:1;}
-90%{opacity:.15;}
-100%{transform:translateY(-110vh) translateX(20px) scale(2.5);opacity:0;}
+  0%{
+    transform:translateY(0) scale(.4);
+    opacity:0;
+  }
+
+  10%{
+    opacity:1;
+  }
+
+  90%{
+    opacity:.15;
+  }
+
+  100%{
+    transform:
+      translateY(-110vh)
+      translateX(20px)
+      scale(2.5);
+    opacity:0;
+  }
 }
 
 .hero-eyebrow{
-font-size:clamp(9px,2vw,11px);
-letter-spacing:.5em;
-text-transform:uppercase;
-color:var(--gold);
-font-weight:600;
-margin-bottom:clamp(24px,4vw,36px);
-opacity:0;
-animation:fadeUp .7s ease .2s forwards;
+  font-size:clamp(9px,2vw,11px);
+  letter-spacing:.5em;
+  text-transform:uppercase;
+  color:var(--gold);
+  font-weight:600;
+  margin-bottom:clamp(24px,4vw,36px);
+  opacity:0;
+  animation:fadeUp .7s ease .2s forwards;
 }
 
 .hero-brand{
-font-family:'Cinzel',serif;
-font-size:clamp(12px,2.5vw,20px);
-font-weight:400;
-letter-spacing:.4em;
-color:rgba(201,168,76,.4);
-text-transform:uppercase;
-margin-bottom:8px;
-opacity:0;
-animation:fadeUp .7s ease .35s forwards;
+  font-family:'Cinzel',serif;
+  font-size:clamp(12px,2.5vw,20px);
+  font-weight:400;
+  letter-spacing:.4em;
+  color:rgba(201,168,76,.4);
+  text-transform:uppercase;
+  margin-bottom:8px;
+  opacity:0;
+  animation:fadeUp .7s ease .35s forwards;
 }
 
 .hero-presenta{
-font-family:'Playfair Display',serif;
-font-style:italic;
-font-size:clamp(13px,2vw,17px);
-color:var(--muted);
-margin-bottom:16px;
-opacity:0;
-animation:fadeUp .7s ease .5s forwards;
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:clamp(13px,2vw,17px);
+  color:var(--muted);
+  margin-bottom:16px;
+  opacity:0;
+  animation:fadeUp .7s ease .5s forwards;
 }
 
 .hero-drop{
-font-size:clamp(8px,1.5vw,10px);
-letter-spacing:.45em;
-text-transform:uppercase;
-color:rgba(201,168,76,.3);
-font-weight:600;
-margin-bottom:8px;
-opacity:0;
-animation:fadeUp .7s ease .6s forwards;
+  font-size:clamp(8px,1.5vw,10px);
+  letter-spacing:.45em;
+  text-transform:uppercase;
+  color:rgba(201,168,76,.3);
+  font-weight:600;
+  margin-bottom:8px;
+  opacity:0;
+  animation:fadeUp .7s ease .6s forwards;
 }
 
 .hero-title{
-font-family:'Cinzel',serif;
-font-size:clamp(46px,16vw,140px);
-font-weight:900;
-line-height:.92;
-letter-spacing:-.02em;
-background:linear-gradient(135deg,var(--gold-light) 0%,var(--gold) 45%,var(--gold-dark) 100%);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-background-clip:text;
-opacity:0;
-animation:fadeUp 1s ease .75s forwards;
-position:relative;
-z-index:1;
-margin-bottom:16px;
+  font-family:'Cinzel',serif;
+  font-size:clamp(46px,16vw,140px);
+  font-weight:900;
+  line-height:.92;
+  letter-spacing:-.02em;
+  background:
+    linear-gradient(
+      135deg,
+      var(--gold-light) 0%,
+      var(--gold) 45%,
+      var(--gold-dark) 100%
+    );
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  opacity:0;
+  animation:fadeUp 1s ease .75s forwards;
+  position:relative;
+  z-index:1;
+  margin-bottom:16px;
 }
 
 .hero-tagline{
-font-family:'Playfair Display',serif;
-font-style:italic;
-font-size:clamp(13px,2.5vw,20px);
-color:rgba(232,232,232,.35);
-line-height:1.6;
-opacity:0;
-animation:fadeUp .7s ease 1s forwards;
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:clamp(13px,2.5vw,20px);
+  color:rgba(232,232,232,.35);
+  line-height:1.6;
+  opacity:0;
+  animation:fadeUp .7s ease 1s forwards;
 }
 
 .hero-line{
-width:1px;
-height:clamp(48px,7vw,70px);
-background:linear-gradient(to bottom,var(--gold),transparent);
-margin-top:clamp(36px,5vw,50px);
-opacity:0;
-animation:fadeUp .7s ease 1.2s forwards;
+  width:1px;
+  height:clamp(48px,7vw,70px);
+  background:
+    linear-gradient(
+      to bottom,
+      var(--gold),
+      transparent
+    );
+  margin-top:clamp(36px,5vw,50px);
+  opacity:0;
+  animation:fadeUp .7s ease 1.2s forwards;
 }
 
 @keyframes fadeUp{
-from{opacity:0;transform:translateY(26px);}
-to{opacity:1;transform:translateY(0);}
+  from{
+    opacity:0;
+    transform:translateY(26px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
 }
 
-/* LAYOUT */
+/* =========================================================
+   LAYOUT
+========================================================= */
 
 .divider{
-display:flex;
-align-items:center;
-gap:16px;
-padding:0 clamp(16px,4vw,24px);
-max-width:1000px;
-margin:0 auto;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:0 clamp(16px,4vw,24px);
+  max-width:1000px;
+  margin:0 auto;
 }
 
 .divider-line{
-flex:1;
-height:1px;
-background:rgba(201,168,76,.1);
+  flex:1;
+  height:1px;
+  background:rgba(201,168,76,.1);
 }
 
 .divider-sym{
-font-family:'Cinzel',serif;
-font-size:clamp(12px,2vw,16px);
-color:var(--gold);
-opacity:.28;
+  font-family:'Cinzel',serif;
+  font-size:clamp(12px,2vw,16px);
+  color:var(--gold);
+  opacity:.28;
 }
 
 .section{
-padding:clamp(52px,7vw,88px) clamp(16px,4vw,24px);
-max-width:1000px;
-margin:0 auto;
+  padding:clamp(52px,7vw,88px)
+           clamp(16px,4vw,24px);
+  max-width:1000px;
+  margin:0 auto;
 }
 
 .sec-label{
-font-size:clamp(8px,1.5vw,10px);
-letter-spacing:.5em;
-text-transform:uppercase;
-color:var(--gold);
-font-weight:600;
-margin-bottom:12px;
+  font-size:clamp(8px,1.5vw,10px);
+  letter-spacing:.5em;
+  text-transform:uppercase;
+  color:var(--gold);
+  font-weight:600;
+  margin-bottom:12px;
 }
 
 .sec-title{
-font-family:'Cinzel',serif;
-font-size:clamp(20px,5.5vw,44px);
-font-weight:700;
-color:#fff;
-line-height:1.1;
-margin-bottom:clamp(24px,4vw,44px);
+  font-family:'Cinzel',serif;
+  font-size:clamp(20px,5.5vw,44px);
+  font-weight:700;
+  color:#fff;
+  line-height:1.1;
+  margin-bottom:clamp(24px,4vw,44px);
 }
 
-/* UNITS */
+/* =========================================================
+   UNITS
+========================================================= */
 
 .units-wrap{
-display:flex;
-align-items:center;
-justify-content:center;
-margin-bottom:clamp(24px,4vw,36px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:clamp(24px,4vw,36px);
 }
 
 .units-block{
-display:flex;
-flex-direction:column;
-align-items:center;
-padding:0 clamp(16px,5vw,64px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:0 clamp(16px,5vw,64px);
 }
 
 .units-num{
-font-family:'Cinzel',serif;
-font-size:clamp(52px,13vw,112px);
-font-weight:900;
-line-height:1;
-background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--gold-dark));
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-background-clip:text;
-letter-spacing:-.03em;
+  font-family:'Cinzel',serif;
+  font-size:clamp(52px,13vw,112px);
+  font-weight:900;
+  line-height:1;
+  background:
+    linear-gradient(
+      135deg,
+      var(--gold-light),
+      var(--gold),
+      var(--gold-dark)
+    );
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  letter-spacing:-.03em;
 }
 
 .units-sub{
-font-size:clamp(8px,1.5vw,10px);
-letter-spacing:.38em;
-text-transform:uppercase;
-color:var(--muted);
-margin-top:6px;
-font-weight:600;
+  font-size:clamp(8px,1.5vw,10px);
+  letter-spacing:.38em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-top:6px;
+  font-weight:600;
 }
 
 .units-div-v{
-width:1px;
-height:clamp(60px,10vw,88px);
-background:rgba(201,168,76,.15);
+  width:1px;
+  height:clamp(60px,10vw,88px);
+  background:rgba(201,168,76,.15);
 }
 
 .units-desc{
-font-family:'Playfair Display',serif;
-font-style:italic;
-font-size:clamp(13px,2.5vw,18px);
-color:rgba(232,232,232,.3);
-max-width:460px;
-margin:0 auto clamp(22px,4vw,32px);
-line-height:1.7;
-text-align:center;
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:clamp(13px,2.5vw,18px);
+  color:rgba(232,232,232,.3);
+  max-width:460px;
+  margin:0 auto clamp(22px,4vw,32px);
+  line-height:1.7;
+  text-align:center;
 }
 
 .bar-wrap{
-max-width:clamp(280px,60vw,460px);
-margin:0 auto;
+  max-width:clamp(280px,60vw,460px);
+  margin:0 auto;
 }
 
 .bar-labels{
-display:flex;
-justify-content:space-between;
-font-size:clamp(8px,1.5vw,10px);
-letter-spacing:.2em;
-text-transform:uppercase;
-color:var(--muted);
-margin-bottom:8px;
+  display:flex;
+  justify-content:space-between;
+  font-size:clamp(8px,1.5vw,10px);
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:8px;
 }
 
 .bar-track{
-width:100%;
-height:1px;
-background:rgba(201,168,76,.1);
-overflow:hidden;
+  width:100%;
+  height:1px;
+  background:rgba(201,168,76,.1);
+  overflow:hidden;
 }
 
 .bar-fill{
-height:100%;
-background:linear-gradient(to right,var(--gold-dark),var(--gold-light));
-width:0%;
-animation:fillBar 2.5s ease 1.5s forwards;
+  height:100%;
+  background:
+    linear-gradient(
+      to right,
+      var(--gold-dark),
+      var(--gold-light)
+    );
+  width:0%;
+  animation:fillBar 2.5s ease 1.5s forwards;
 }
 
 @keyframes fillBar{
-to{width:100%;}
+  to{
+    width:100%;
+  }
 }
 
-/* COUNTDOWN */
+/* =========================================================
+   COUNTDOWN
+========================================================= */
 
 .countdown{
-padding:clamp(52px,7vw,80px) clamp(16px,4vw,24px);
-max-width:1000px;
-margin:0 auto;
-text-align:center;
-border-top:1px solid rgba(201,168,76,.08);
+  padding:clamp(52px,7vw,80px)
+           clamp(16px,4vw,24px);
+  max-width:1000px;
+  margin:0 auto;
+  text-align:center;
+  border-top:1px solid rgba(201,168,76,.08);
 }
 
 .cd-date{
-font-family:'Playfair Display',serif;
-font-style:italic;
-font-size:clamp(12px,2.5vw,17px);
-color:var(--muted);
-margin-bottom:clamp(28px,5vw,46px);
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:clamp(12px,2.5vw,17px);
+  color:var(--muted);
+  margin-bottom:clamp(28px,5vw,46px);
 }
 
 .cd-grid{
-display:flex;
-justify-content:center;
-align-items:flex-start;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
 }
 
 .cd-unit{
-display:flex;
-flex-direction:column;
-align-items:center;
-padding:0 clamp(6px,3vw,38px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:0 clamp(6px,3vw,38px);
 }
 
 .cd-num{
-font-family:'Cinzel',serif;
-font-size:clamp(36px,10vw,90px);
-font-weight:900;
-line-height:1;
-color:#fff;
-letter-spacing:-.02em;
-transition:color .3s;
+  font-family:'Cinzel',serif;
+  font-size:clamp(36px,10vw,90px);
+  font-weight:900;
+  line-height:1;
+  color:#fff;
+  letter-spacing:-.02em;
+  transition:color .3s;
 }
 
 .cd-num.tick{
-color:var(--gold-light);
+  color:var(--gold-light);
 }
 
 .cd-label{
-font-size:clamp(8px,1.5vw,9px);
-letter-spacing:.38em;
-text-transform:uppercase;
-color:var(--muted);
-margin-top:8px;
-font-weight:600;
+  font-size:clamp(8px,1.5vw,9px);
+  letter-spacing:.38em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-top:8px;
+  font-weight:600;
 }
 
 .cd-sep{
-font-family:'Cinzel',serif;
-font-size:clamp(28px,8vw,68px);
-font-weight:900;
-color:rgba(201,168,76,.15);
-padding-top:3px;
-align-self:flex-start;
+  font-family:'Cinzel',serif;
+  font-size:clamp(28px,8vw,68px);
+  font-weight:900;
+  color:rgba(201,168,76,.15);
+  padding-top:3px;
+  align-self:flex-start;
 }
 
-/* SPECS */
+/* =========================================================
+   SPECS
+========================================================= */
 
 .specs-section{
-padding:clamp(52px,7vw,80px) clamp(16px,4vw,24px);
-max-width:1000px;
-margin:0 auto;
-border-top:1px solid rgba(201,168,76,.08);
+  padding:clamp(52px,7vw,80px)
+           clamp(16px,4vw,24px);
+  max-width:1000px;
+  margin:0 auto;
+  border-top:1px solid rgba(201,168,76,.08);
 }
 
 .specs-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:2px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:2px;
 }
 
 @media(max-width:540px){
-.specs-grid{
-grid-template-columns:1fr;
-}
+  .specs-grid{
+    grid-template-columns:1fr;
+  }
 }
 
 .spec-row{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:clamp(16px,2.5vw,20px) clamp(14px,2.5vw,22px);
-background:var(--smoke);
-border:1px solid rgba(201,168,76,.06);
-transition:border-color .3s,background .3s;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:clamp(16px,2.5vw,20px)
+           clamp(14px,2.5vw,22px);
+  background:var(--smoke);
+  border:1px solid rgba(201,168,76,.06);
+  transition:border-color .3s,background .3s;
 }
 
 .spec-row:hover{
-border-color:rgba(201,168,76,.24);
-background:#161616;
+  border-color:rgba(201,168,76,.24);
+  background:#161616;
 }
 
 .spec-key{
-font-size:clamp(8px,1.5vw,9px);
-letter-spacing:.28em;
-text-transform:uppercase;
-color:var(--muted);
-font-weight:600;
+  font-size:clamp(8px,1.5vw,9px);
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--muted);
+  font-weight:600;
 }
 
 .spec-val{
-font-family:'Cinzel',serif;
-font-size:clamp(11px,2vw,13px);
-color:var(--gold);
-font-weight:700;
-letter-spacing:.04em;
+  font-family:'Cinzel',serif;
+  font-size:clamp(11px,2vw,13px);
+  color:var(--gold);
+  font-weight:700;
+  letter-spacing:.04em;
 }
 
 .spec-val.blur{
-filter:blur(5px);
-transition:filter .4s;
+  filter:blur(5px);
+  transition:filter .4s;
 }
 
-.spec-val.blur:hover{
-filter:blur(0);
+.spec-val.blur:hover,
+.spec-val.blur:active{
+  filter:blur(0);
 }
 
-/* ABOUT */
+/* =========================================================
+   ABOUT
+========================================================= */
 
 .about-block{
-background:var(--carbon);
-border:1px solid rgba(201,168,76,.13);
-padding:clamp(24px,4vw,48px);
-position:relative;
-overflow:hidden;
+  background:var(--carbon);
+  border:1px solid rgba(201,168,76,.13);
+  padding:clamp(24px,4vw,48px);
+  position:relative;
+  overflow:hidden;
 }
 
 .about-block::before{
-content:'01';
-position:absolute;
-right:clamp(12px,3vw,30px);
-top:clamp(10px,2vw,20px);
-font-family:'Cinzel',serif;
-font-size:clamp(60px,12vw,120px);
-font-weight:900;
-color:rgba(201,168,76,.04);
-line-height:1;
-pointer-events:none;
+  content:'01';
+  position:absolute;
+  right:clamp(12px,3vw,30px);
+  top:clamp(10px,2vw,20px);
+  font-family:'Cinzel',serif;
+  font-size:clamp(60px,12vw,120px);
+  font-weight:900;
+  color:rgba(201,168,76,.04);
+  line-height:1;
+  pointer-events:none;
 }
 
 .about-text{
-font-size:clamp(13px,2.2vw,17px);
-line-height:1.9;
-color:#999;
+  font-size:clamp(13px,2.2vw,17px);
+  line-height:1.9;
+  color:#999;
 }
 
 .about-text strong{
-color:var(--gold);
-font-weight:600;
+  color:var(--gold);
+  font-weight:600;
 }
 
 .about-text p{
-margin-bottom:14px;
+  margin-bottom:14px;
 }
 
 .about-text p:last-child{
-margin-bottom:0;
+  margin-bottom:0;
 }
 
-/* CTA */
+/* =========================================================
+   CTA
+========================================================= */
 
 .cta-section{
-padding:clamp(64px,9vw,100px) clamp(16px,4vw,24px);
-max-width:680px;
-margin:0 auto;
-text-align:center;
-border-top:1px solid rgba(201,168,76,.08);
+  padding:clamp(64px,9vw,100px)
+           clamp(16px,4vw,24px);
+  max-width:680px;
+  margin:0 auto;
+  text-align:center;
+  border-top:1px solid rgba(201,168,76,.08);
 }
 
 .cta-title{
-font-family:'Cinzel',serif;
-font-size:clamp(24px,6vw,48px);
-font-weight:900;
-color:#fff;
-line-height:1.1;
-margin-bottom:12px;
+  font-family:'Cinzel',serif;
+  font-size:clamp(24px,6vw,48px);
+  font-weight:900;
+  color:#fff;
+  line-height:1.1;
+  margin-bottom:12px;
 }
 
 .cta-sub{
-font-family:'Playfair Display',serif;
-font-style:italic;
-font-size:clamp(13px,2.5vw,18px);
-color:var(--muted);
-margin-bottom:clamp(28px,5vw,44px);
-line-height:1.6;
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:clamp(13px,2.5vw,18px);
+  color:var(--muted);
+  margin-bottom:clamp(28px,5vw,44px);
+  line-height:1.6;
 }
 
 .cta-btn{
-display:inline-block;
-width:100%;
-max-width:320px;
-padding:clamp(16px,3vw,20px) clamp(24px,4vw,48px);
-background:transparent;
-border:1px solid var(--gold);
-color:var(--gold);
-font-family:'Montserrat',sans-serif;
-font-size:clamp(9px,1.8vw,10px);
-font-weight:600;
-letter-spacing:.4em;
-text-transform:uppercase;
-text-decoration:none;
-text-align:center;
-position:relative;
-overflow:hidden;
-transition:color .35s;
+  display:inline-block;
+  width:100%;
+  max-width:320px;
+  padding:clamp(16px,3vw,20px)
+           clamp(24px,4vw,48px);
+  background:transparent;
+  border:1px solid var(--gold);
+  color:var(--gold);
+  font-family:'Montserrat',sans-serif;
+  font-size:clamp(9px,1.8vw,10px);
+  font-weight:600;
+  letter-spacing:.4em;
+  text-transform:uppercase;
+  text-decoration:none;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  transition:color .35s;
 }
 
 .cta-btn::before{
-content:'';
-position:absolute;
-inset:0;
-background:var(--gold);
-transform:translateX(-101%);
-transition:transform .35s cubic-bezier(.77,0,.18,1);
-z-index:0;
+  content:'';
+  position:absolute;
+  inset:0;
+  background:var(--gold);
+  transform:translateX(-101%);
+  transition:transform .35s cubic-bezier(.77,0,.18,1);
+  z-index:0;
 }
 
-.cta-btn:hover{
-color:var(--black);
+.cta-btn:hover,
+.cta-btn:active{
+  color:var(--black);
 }
 
-.cta-btn:hover::before{
-transform:translateX(0);
+.cta-btn:hover::before,
+.cta-btn:active::before{
+  transform:translateX(0);
 }
 
 .cta-btn span{
-position:relative;
-z-index:1;
+  position:relative;
+  z-index:1;
 }
 
 .cta-note{
-font-size:clamp(8px,1.5vw,10px);
-letter-spacing:.22em;
-color:rgba(102,102,102,.5);
-margin-top:18px;
-text-transform:uppercase;
+  font-size:clamp(8px,1.5vw,10px);
+  letter-spacing:.22em;
+  color:rgba(102,102,102,.5);
+  margin-top:18px;
+  text-transform:uppercase;
 }
 
-/* FOOTER */
+/* =========================================================
+   FOOTER
+========================================================= */
 
 footer{
-padding:clamp(36px,5vw,50px) clamp(16px,4vw,24px);
-text-align:center;
-border-top:1px solid rgba(201,168,76,.08);
+  padding:clamp(36px,5vw,50px)
+           clamp(16px,4vw,24px);
+  text-align:center;
+  border-top:1px solid rgba(201,168,76,.08);
 }
 
 .footer-brand{
-font-family:'Cinzel',serif;
-font-size:clamp(16px,4vw,20px);
-font-weight:900;
-background:linear-gradient(135deg,var(--gold-light),var(--gold));
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-background-clip:text;
-letter-spacing:.12em;
-margin-bottom:8px;
+  font-family:'Cinzel',serif;
+  font-size:clamp(16px,4vw,20px);
+  font-weight:900;
+  background:
+    linear-gradient(
+      135deg,
+      var(--gold-light),
+      var(--gold)
+    );
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  letter-spacing:.12em;
+  margin-bottom:8px;
 }
 
 .footer-sub{
-font-size:clamp(8px,1.5vw,10px);
-letter-spacing:.3em;
-color:var(--muted);
-text-transform:uppercase;
+  font-size:clamp(8px,1.5vw,10px);
+  letter-spacing:.3em;
+  color:var(--muted);
+  text-transform:uppercase;
 }
 
+/* =========================================================
+   REVEAL
+========================================================= */
+
 .reveal{
-opacity:0;
-transform:translateY(24px);
-transition:opacity .65s ease,transform .65s ease;
+  opacity:0;
+  transform:translateY(24px);
+  transition:
+    opacity .65s ease,
+    transform .65s ease;
 }
 
 .reveal.visible{
-opacity:1;
-transform:translateY(0);
+  opacity:1;
+  transform:translateY(0);
 }
 
-/* ESTADO CONEXIÓN */
+/* =========================================================
+   MOBILE
+========================================================= */
 
-#supabase-status{
-position:fixed;
-bottom:12px;
-right:12px;
-font-size:8px;
-letter-spacing:.12em;
-color:#333;
-z-index:99999;
-pointer-events:none;
+@media(max-width:600px){
+
+  .units-wrap{
+    flex-direction:column;
+    gap:28px;
+  }
+
+  .units-div-v{
+    width:60px;
+    height:1px;
+  }
+
+  .cd-grid{
+    transform:scale(.85);
+  }
+
+  .spec-row{
+    gap:15px;
+  }
+
 }
+
 </style>
 </head>
 
 <body>
 
-<div id="supabase-status">CONECTANDO</div>
+<!-- =======================================================
+     ACCESS GATE
+======================================================= -->
+
+<div id="access-gate">
+
+  <div class="ag-logo">
+    CHURREARG
+  </div>
+
+  <div class="ag-line"></div>
+
+  <div class="ag-title">
+    ACCESO PRIVADO
+  </div>
+
+  <p class="ag-sub">
+    Ingresá el código de acceso correspondiente
+    a tu unidad.
+  </p>
+
+  <div class="access-form">
+
+    <input
+      type="text"
+      id="vipCode"
+      placeholder="CÓDIGO DE ACCESO"
+      autocomplete="off"
+      autocapitalize="characters"
+      maxlength="20"
+    >
+
+    <button id="accessBtn">
+      <span>INGRESAR</span>
+    </button>
+
+    <p id="accessMessage"></p>
+
+  </div>
+
+  <div class="ag-legal">
+    CHURREARG™ · ACCESO PRIVADO
+  </div>
+
+</div>
+
+
+<!-- =======================================================
+     USER BADGE
+======================================================= -->
+
+<div id="userBadge">
+  UNIDAD <span id="userUnit">---</span>
+</div>
+
+
+<!-- =======================================================
+     CURSOR
+======================================================= -->
 
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<div id="age-gate">
 
-<div class="ag-logo">CHURREARG</div>
-
-<div class="ag-line"></div>
-
-<div class="ag-title">
-¿Tenés 18 años o más?
-</div>
-
-<p class="ag-sub">
-Este sitio contiene contenido para adultos. Confirmá tu edad para continuar.
-</p>
-
-<div class="ag-btns" id="agBtns">
-
-<button class="ag-btn" onclick="ageAllow()">
-<span>Sí, tengo 18+</span>
-</button>
-
-<button class="ag-btn-no" onclick="ageDeny()">
-No, soy menor
-</button>
-
-</div>
-
-<div class="ag-deny" id="agDeny">
-<p class="ag-deny-text">
-Este sitio no está disponible<br>
-para menores de edad.
-</p>
-</div>
-
-<div class="ag-legal">
-Producto coleccionable · CHURREARG™ · Solo para adultos
-</div>
-
-</div>
+<!-- =======================================================
+     HERO
+======================================================= -->
 
 <div class="hero">
 
-<div class="smoke-bg" id="smokeBg"></div>
+  <div class="smoke-bg" id="smokeBg"></div>
 
-<div class="hero-eyebrow">
-Lanzamiento Oficial · 16 de Mayo, 2026
+  <div class="hero-eyebrow">
+    Lanzamiento Oficial · 16 de Mayo, 2026
+  </div>
+
+  <div class="hero-brand">
+    CHURREARG
+  </div>
+
+  <div class="hero-presenta">
+    presenta
+  </div>
+
+  <div class="hero-drop">
+    Collector's Drop #01
+  </div>
+
+  <h1 class="hero-title">
+    La Pegajosa
+  </h1>
+
+  <p class="hero-tagline">
+    Kit de edición limitada. Numerado.<br>
+    Sin reposición.
+  </p>
+
+  <div class="hero-line"></div>
+
 </div>
 
-<div class="hero-brand">
-CHURREARG
-</div>
 
-<div class="hero-presenta">
-presenta
-</div>
-
-<div class="hero-drop">
-Collector's Drop #01
-</div>
-
-<h1 class="hero-title">
-La Pegajosa
-</h1>
-
-<p class="hero-tagline">
-Kit de edición limitada. Numerado.<br>
-Sin reposición.
-</p>
-
-<div class="hero-line"></div>
-
-</div>
+<!-- =======================================================
+     DIVIDER
+======================================================= -->
 
 <div class="divider">
-<div class="divider-line"></div>
-<div class="divider-sym">✦</div>
-<div class="divider-line"></div>
-</div>
 
-<div class="section reveal" style="text-align:center;">
+  <div class="divider-line"></div>
 
-<div class="sec-label">
-Unidades Disponibles
-</div>
+  <div class="divider-sym">
+    ✦
+  </div>
 
-<div class="units-wrap">
-
-<div class="units-block">
-
-<div class="units-num" id="unitsCounter">
-0
-</div>
-
-<div class="units-sub">
-Unidades Totales
-</div>
+  <div class="divider-line"></div>
 
 </div>
 
-<div class="units-div-v"></div>
 
-<div class="units-block">
+<!-- =======================================================
+     UNIDADES
+======================================================= -->
 
-<div class="units-num" style="font-size:clamp(26px,8vw,62px);line-height:1.3;">
-#001<br>— #050
+<div
+  class="section reveal"
+  style="text-align:center;"
+>
+
+  <div class="sec-label">
+    Unidades Disponibles
+  </div>
+
+  <div class="units-wrap">
+
+    <div class="units-block">
+
+      <div
+        class="units-num"
+        id="unitsCounter"
+      >
+        0
+      </div>
+
+      <div class="units-sub">
+        Unidades Totales
+      </div>
+
+    </div>
+
+    <div class="units-div-v"></div>
+
+    <div class="units-block">
+
+      <div
+        class="units-num"
+        style="
+          font-size:clamp(26px,8vw,62px);
+          line-height:1.3;
+        "
+      >
+        #001<br>
+        — #050
+      </div>
+
+      <div class="units-sub">
+        Numeradas Individualmente
+      </div>
+
+    </div>
+
+  </div>
+
+  <p class="units-desc">
+    Cada kit lleva su número.
+    No hay dos iguales.
+    No hay segunda vuelta.
+  </p>
+
+  <div class="bar-wrap">
+
+    <div class="bar-labels">
+      <span>Disponibilidad</span>
+      <span>Limitada</span>
+    </div>
+
+    <div class="bar-track">
+      <div class="bar-fill"></div>
+    </div>
+
+  </div>
+
 </div>
 
-<div class="units-sub">
-Numeradas Individualmente
-</div>
 
-</div>
-
-</div>
-
-<p class="units-desc">
-Cada kit lleva su número. No hay dos iguales. No hay segunda vuelta.
-</p>
-
-<div class="bar-wrap">
-
-<div class="bar-labels">
-<span>Disponibilidad</span>
-<span>Limitada</span>
-</div>
-
-<div class="bar-track">
-<div class="bar-fill"></div>
-</div>
-
-</div>
-
-</div>
+<!-- =======================================================
+     DIVIDER
+======================================================= -->
 
 <div class="divider">
-<div class="divider-line"></div>
-<div class="divider-sym">✦</div>
-<div class="divider-line"></div>
+
+  <div class="divider-line"></div>
+
+  <div class="divider-sym">
+    ✦
+  </div>
+
+  <div class="divider-line"></div>
+
 </div>
+
+
+<!-- =======================================================
+     COUNTDOWN
+======================================================= -->
 
 <div class="countdown reveal">
 
-<div class="sec-label">
-Cuenta Regresiva al Lanzamiento
+  <div class="sec-label">
+    Cuenta Regresiva al Lanzamiento
+  </div>
+
+  <div class="cd-date">
+    16 de Mayo, 2026
+  </div>
+
+  <div class="cd-grid">
+
+    <div class="cd-unit">
+
+      <div
+        class="cd-num"
+        id="cdDays"
+      >
+        00
+      </div>
+
+      <div class="cd-label">
+        Días
+      </div>
+
+    </div>
+
+    <div class="cd-sep">
+      :
+    </div>
+
+    <div class="cd-unit">
+
+      <div
+        class="cd-num"
+        id="cdHours"
+      >
+        00
+      </div>
+
+      <div class="cd-label">
+        Horas
+      </div>
+
+    </div>
+
+    <div class="cd-sep">
+      :
+    </div>
+
+    <div class="cd-unit">
+
+      <div
+        class="cd-num"
+        id="cdMins"
+      >
+        00
+      </div>
+
+      <div class="cd-label">
+        Minutos
+      </div>
+
+    </div>
+
+    <div class="cd-sep">
+      :
+    </div>
+
+    <div class="cd-unit">
+
+      <div
+        class="cd-num"
+        id="cdSecs"
+      >
+        00
+      </div>
+
+      <div class="cd-label">
+        Segundos
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
 
-<div class="cd-date">
-16 de Mayo, 2026
-</div>
 
-<div class="cd-grid">
-
-<div class="cd-unit">
-<div class="cd-num" id="cdDays">00</div>
-<div class="cd-label">Días</div>
-</div>
-
-<div class="cd-sep">:</div>
-
-<div class="cd-unit">
-<div class="cd-num" id="cdHours">00</div>
-<div class="cd-label">Horas</div>
-</div>
-
-<div class="cd-sep">:</div>
-
-<div class="cd-unit">
-<div class="cd-num" id="cdMins">00</div>
-<div class="cd-label">Minutos</div>
-</div>
-
-<div class="cd-sep">:</div>
-
-<div class="cd-unit">
-<div class="cd-num" id="cdSecs">00</div>
-<div class="cd-label">Segundos</div>
-</div>
-
-</div>
-</div>
+<!-- =======================================================
+     DIVIDER
+======================================================= -->
 
 <div class="divider">
-<div class="divider-line"></div>
-<div class="divider-sym">✦</div>
-<div class="divider-line"></div>
+
+  <div class="divider-line"></div>
+
+  <div class="divider-sym">
+    ✦
+  </div>
+
+  <div class="divider-line"></div>
+
 </div>
+
+
+<!-- =======================================================
+     SPECS
+======================================================= -->
 
 <div class="specs-section reveal">
 
-<div class="sec-label">
-El Drop
+  <div class="sec-label">
+    El Drop
+  </div>
+
+  <h2 class="sec-title">
+    No es un producto.<br>
+    Es un estándar.
+  </h2>
+
+  <div class="specs-grid">
+
+    <div class="spec-row">
+      <span class="spec-key">
+        Drop
+      </span>
+
+      <span class="spec-val">
+        #01 — La Pegajosa
+      </span>
+    </div>
+
+    <div class="spec-row">
+      <span class="spec-key">
+        Edición
+      </span>
+
+      <span class="spec-val">
+        Limitada · 50 unidades
+      </span>
+    </div>
+
+    <div class="spec-row">
+      <span class="spec-key">
+        Numeración
+      </span>
+
+      <span class="spec-val">
+        #001 al #050
+      </span>
+    </div>
+
+    <div class="spec-row">
+      <span class="spec-key">
+        Reposición
+      </span>
+
+      <span class="spec-val">
+        No
+      </span>
+    </div>
+
+    <div class="spec-row">
+      <span class="spec-key">
+        Lanzamiento
+      </span>
+
+      <span class="spec-val">
+        16 de Mayo, 2026
+      </span>
+    </div>
+
+    <div class="spec-row">
+      <span class="spec-key">
+        Contenido
+      </span>
+
+      <span class="spec-val blur">
+        — — — — —
+      </span>
+    </div>
+
+  </div>
+
 </div>
 
-<h2 class="sec-title">
-No es un producto.<br>
-Es un estándar.
-</h2>
 
-<div class="specs-grid">
-
-<div class="spec-row">
-<span class="spec-key">Drop</span>
-<span class="spec-val">#01 — La Pegajosa</span>
-</div>
-
-<div class="spec-row">
-<span class="spec-key">Edición</span>
-<span class="spec-val">Limitada · 50 unidades</span>
-</div>
-
-<div class="spec-row">
-<span class="spec-key">Numeración</span>
-<span class="spec-val">#001 al #050</span>
-</div>
-
-<div class="spec-row">
-<span class="spec-key">Reposición</span>
-<span class="spec-val">No</span>
-</div>
-
-<div class="spec-row">
-<span class="spec-key">Lanzamiento</span>
-<span class="spec-val">16 de Mayo, 2026</span>
-</div>
-
-<div class="spec-row">
-<span class="spec-key">Contenido</span>
-<span class="spec-val blur">— — — — —</span>
-</div>
-
-</div>
-</div>
+<!-- =======================================================
+     DIVIDER
+======================================================= -->
 
 <div class="divider">
-<div class="divider-line"></div>
-<div class="divider-sym">✦</div>
-<div class="divider-line"></div>
+
+  <div class="divider-line"></div>
+
+  <div class="divider-sym">
+    ✦
+  </div>
+
+  <div class="divider-line"></div>
+
 </div>
+
+
+<!-- =======================================================
+     ABOUT
+======================================================= -->
 
 <div class="section reveal">
 
-<div class="sec-label">
-La Pegajosa
+  <div class="sec-label">
+    La Pegajosa
+  </div>
+
+  <h2 class="sec-title">
+    Inspirada en lo que se siente,<br>
+    no en lo que se ve.
+  </h2>
+
+  <div class="about-block">
+
+    <div class="about-text">
+
+      <p>
+        <strong>La Pegajosa Edition</strong>
+        está inspirada en perfiles de chocolate
+        intensos, notas profundas y una textura
+        característica que destaca por su
+        elaboración y presentación.
+      </p>
+
+      <p>
+        Un homenaje a una cultura que valora
+        el detalle, la calidad extrema y las
+        experiencias auténticas.
+      </p>
+
+      <p>
+        <strong>CHURREARG™</strong>
+        es una marca diseñada para quienes
+        buscan experiencias premium, coleccionables
+        y con identidad propia.
+      </p>
+
+    </div>
+
+  </div>
+
 </div>
 
-<h2 class="sec-title">
-Inspirada en lo que se siente,<br>
-no en lo que se ve.
-</h2>
 
-<div class="about-block">
-
-<div class="about-text">
-
-<p>
-<strong>La Pegajosa Edition</strong>
-está inspirada en perfiles aromáticos intensos, notas terrosas y una textura característica que destaca por su adherencia natural. Su esencia evoca experiencias profundas, relajadas y de alta pureza.
-</p>
-
-<p>
-Un homenaje a una cultura que valora el detalle, la calidad extrema y las sensaciones auténticas. Diseñado para los que entienden que los accesorios no son un extra — son parte de la experiencia.
-</p>
-
-<p>
-<strong>CHURREARG™</strong>
-es una marca diseñada para quienes buscan experiencias premium, coleccionables y con identidad propia. Cada pieza combina arte, detalle y excelencia, manteniendo un estándar de diseño superior.
-</p>
-
-</div>
-
-</div>
-</div>
+<!-- =======================================================
+     DIVIDER
+======================================================= -->
 
 <div class="divider">
-<div class="divider-line"></div>
-<div class="divider-sym">✦</div>
-<div class="divider-line"></div>
+
+  <div class="divider-line"></div>
+
+  <div class="divider-sym">
+    ✦
+  </div>
+
+  <div class="divider-line"></div>
+
 </div>
+
+
+<!-- =======================================================
+     CTA
+======================================================= -->
 
 <div class="cta-section reveal">
 
-<div class="sec-label">
-Acceso Limitado
+  <div class="sec-label">
+    Acceso Limitado
+  </div>
+
+  <h2 class="cta-title">
+    ¿Querés el tuyo?
+  </h2>
+
+  <p class="cta-sub">
+    El acceso es por orden de llegada.<br>
+    Las unidades no esperan.
+  </p>
+
+  <a
+    href="https://www.instagram.com/churrearg"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="cta-btn"
+  >
+    <span>
+      Escribinos por Instagram
+    </span>
+  </a>
+
+  <p class="cta-note">
+    @churrearg · Solo por DM
+  </p>
+
 </div>
 
-<h2 class="cta-title">
-¿Querés el tuyo?
-</h2>
 
-<p class="cta-sub">
-El acceso es por orden de llegada.<br>
-Las unidades no esperan.
-</p>
-
-<a href="https://www.instagram.com/churrearg"
-target="_blank"
-class="cta-btn">
-
-<span>
-Escribinos por Instagram
-</span>
-
-</a>
-
-<p class="cta-note">
-@churrearg · Solo por DM
-</p>
-
-</div>
+<!-- =======================================================
+     FOOTER
+======================================================= -->
 
 <footer>
 
-<div class="footer-brand">
-CHURREARG
-</div>
+  <div class="footer-brand">
+    CHURREARG
+  </div>
 
-<div class="footer-sub">
-Accesorios Premium · Buenos Aires · Argentina
-</div>
+  <div class="footer-sub">
+    Accesorios Premium · Buenos Aires · Argentina
+  </div>
 
 </footer>
+
 
 <script>
 
 /* =========================================================
-   SUPABASE
-   ========================================================= */
+   SUPABASE CONFIG
+========================================================= */
 
 const SUPABASE_URL =
-"https://yfjqbonwpuuurxihpibk.supabase.co";
+  'https://yfjqbonwpuuurxihpibk.supabase.co';
 
 const SUPABASE_PUBLISHABLE_KEY =
-"sb_publishable_KvjMn2_OAYWGw_B3N-0-KA_zD86Akbk";
+  'sb_publishable_KvjMn2_OAYWGw_B3N-0-KA_zD86Akbk';
 
 const supabaseClient =
-supabase.createClient(
-SUPABASE_URL,
-SUPABASE_PUBLISHABLE_KEY
-);
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
 
 
 /* =========================================================
-   REGISTRAR VISITA
-   ========================================================= */
+   ELEMENTOS
+========================================================= */
 
-async function registrarVisita(){
+const accessGate =
+  document.getElementById('access-gate');
 
-try{
+const vipCode =
+  document.getElementById('vipCode');
 
-const ahora = new Date().toISOString();
+const accessBtn =
+  document.getElementById('accessBtn');
 
-const { data, error } = await supabaseClient
-.from("usuarios")
-.insert({
-codigo: "VISITA",
-unidad: null,
-"fecha de acceso": ahora,
-visitas: 1
-})
-.select();
+const accessMessage =
+  document.getElementById('accessMessage');
 
-if(error){
+const userBadge =
+  document.getElementById('userBadge');
 
-console.error(
-"Error registrando visita:",
-error
-);
-
-document.getElementById(
-"supabase-status"
-).textContent = "ERROR SUPABASE";
-
-return;
-
-}
-
-console.log(
-"Visita registrada correctamente:",
-data
-);
-
-document.getElementById(
-"supabase-status"
-).textContent = "CONECTADO";
-
-}catch(error){
-
-console.error(error);
-
-document.getElementById(
-"supabase-status"
-).textContent = "ERROR";
-
-}
-
-}
-
-
-/* Registrar visita al cargar */
-
-registrarVisita();
+const userUnit =
+  document.getElementById('userUnit');
 
 
 /* =========================================================
-   EDAD
-   ========================================================= */
+   NORMALIZAR CÓDIGO
+========================================================= */
 
-(function(){
+function normalizeCode(code){
 
-if(
-sessionStorage.getItem(
-'churrearg_age'
-)==='1'
-){
-
-document
-.getElementById('age-gate')
-.classList
-.add('hidden');
-
-}
-
-})();
-
-
-function ageAllow(){
-
-sessionStorage.setItem(
-'churrearg_age',
-'1'
-);
-
-const g =
-document.getElementById(
-'age-gate'
-);
-
-g.style.transition =
-'opacity .6s ease';
-
-g.style.opacity='0';
-
-setTimeout(
-()=>{
-g.classList.add('hidden');
-},
-600
-);
-
-}
-
-
-function ageDeny(){
-
-document
-.getElementById('agBtns')
-.style.display='none';
-
-document
-.getElementById('agDeny')
-.classList
-.add('visible');
+  return code
+    .trim()
+    .toUpperCase()
+    .replace(/\s+/g,'');
 
 }
 
 
 /* =========================================================
-   PROTECCIONES VISUALES
-   ========================================================= */
+   ACCESO
+========================================================= */
 
-document.addEventListener(
-'contextmenu',
-e=>e.preventDefault()
-);
+async function validarCodigo(){
 
-document.addEventListener(
-'keydown',
-e=>{
+  const code =
+    normalizeCode(vipCode.value);
 
-if(e.key==='F12')
-e.preventDefault();
+  if(!code){
 
-if(
-e.ctrlKey &&
-e.shiftKey &&
-['I','J','C'].includes(e.key)
-)
-e.preventDefault();
+    accessMessage.textContent =
+      'INGRESÁ UN CÓDIGO DE ACCESO.';
 
-if(
-e.ctrlKey &&
-['U','S'].includes(e.key)
-)
-e.preventDefault();
+    accessMessage.className =
+      'error';
+
+    return;
+  }
+
+
+  accessBtn.disabled = true;
+
+  accessMessage.textContent =
+    'VERIFICANDO CÓDIGO...';
+
+  accessMessage.className =
+    '';
+
+
+  try{
+
+    /*
+      Esta función de Supabase:
+
+      1. Busca el código.
+      2. Comprueba que exista.
+      3. Registra fecha/hora.
+      4. Suma una visita.
+      5. Devuelve la unidad.
+    */
+
+    const { data, error } =
+      await supabaseClient
+        .rpc(
+          'registrar_acceso',
+          {
+            p_codigo: code
+          }
+        );
+
+
+    if(error){
+
+      console.error(
+        'Error Supabase:',
+        error
+      );
+
+      accessMessage.textContent =
+        'NO SE PUDO VERIFICAR EL CÓDIGO.';
+
+      accessMessage.className =
+        'error';
+
+      accessBtn.disabled = false;
+
+      return;
+    }
+
+
+    /*
+      Si no existe el código,
+      la función devuelve null.
+    */
+
+    if(!data || data.length === 0){
+
+      accessMessage.textContent =
+        'CÓDIGO INVÁLIDO.';
+
+      accessMessage.className =
+        'error';
+
+      accessBtn.disabled = false;
+
+      vipCode.value = '';
+
+      vipCode.focus();
+
+      return;
+    }
+
+
+    /*
+      Código correcto.
+    */
+
+    const usuario =
+      data[0];
+
+
+    accessMessage.textContent =
+      'ACCESO AUTORIZADO.';
+
+    accessMessage.className =
+      'success';
+
+
+    /*
+      Mostrar número de unidad.
+    */
+
+    if(usuario.unidad !== null){
+
+      userUnit.textContent =
+        String(usuario.unidad)
+          .padStart(3,'0');
+
+      userBadge.classList.add(
+        'visible'
+      );
+
+    }
+
+
+    /*
+      Pequeña pausa para
+      mostrar "ACCESO AUTORIZADO".
+    */
+
+    setTimeout(() => {
+
+      accessGate.classList.add(
+        'hidden'
+      );
+
+      document.body.style.overflow = '';
+
+    }, 500);
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    accessMessage.textContent =
+      'ERROR DE CONEXIÓN. INTENTÁ NUEVAMENTE.';
+
+    accessMessage.className =
+      'error';
+
+    accessBtn.disabled = false;
+
+  }
 
 }
+
+
+/* =========================================================
+   BOTÓN
+========================================================= */
+
+accessBtn.addEventListener(
+  'click',
+  validarCodigo
+);
+
+
+/* =========================================================
+   ENTER
+========================================================= */
+
+vipCode.addEventListener(
+  'keydown',
+  function(event){
+
+    if(event.key === 'Enter'){
+
+      event.preventDefault();
+
+      validarCodigo();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   FOCUS AUTOMÁTICO
+========================================================= */
+
+window.addEventListener(
+  'load',
+  function(){
+
+    vipCode.focus();
+
+  }
 );
 
 
 /* =========================================================
    CURSOR
-   ========================================================= */
+========================================================= */
 
 const cursor =
-document.getElementById('cursor');
+  document.getElementById('cursor');
 
 const ring =
-document.getElementById('cursorRing');
+  document.getElementById('cursorRing');
 
-let mx=0;
-let my=0;
-let rx=0;
-let ry=0;
+let mx = 0;
+let my = 0;
+let rx = 0;
+let ry = 0;
+
 
 document.addEventListener(
-'mousemove',
-e=>{
+  'mousemove',
+  function(e){
 
-mx=e.clientX;
-my=e.clientY;
+    mx = e.clientX;
+    my = e.clientY;
 
-cursor.style.left=
-mx+'px';
+    cursor.style.left =
+      mx + 'px';
 
-cursor.style.top=
-my+'px';
+    cursor.style.top =
+      my + 'px';
 
-}
+  }
 );
+
 
 (function animateCursor(){
 
-rx+=(mx-rx)*.12;
-ry+=(my-ry)*.12;
+  rx += (mx-rx)*0.12;
+  ry += (my-ry)*0.12;
 
-ring.style.left=
-rx+'px';
+  ring.style.left =
+    rx + 'px';
 
-ring.style.top=
-ry+'px';
+  ring.style.top =
+    ry + 'px';
 
-requestAnimationFrame(
-animateCursor
-);
+  requestAnimationFrame(
+    animateCursor
+  );
 
 })();
 
 
 /* =========================================================
    SMOKE
-   ========================================================= */
+========================================================= */
 
 const bg =
-document.getElementById(
-'smokeBg'
-);
+  document.getElementById('smokeBg');
 
 for(let i=0;i<9;i++){
 
-const p =
-document.createElement('div');
+  const p =
+    document.createElement('div');
 
-p.classList.add('sp');
+  p.classList.add('sp');
 
-const s =
-80+Math.random()*200;
+  const s =
+    80 + Math.random()*200;
 
-p.style.cssText=`
-width:${s}px;
-height:${s}px;
-left:${Math.random()*100}%;
-animation-duration:${9+Math.random()*12}s;
-animation-delay:${Math.random()*10}s;
-`;
+  p.style.cssText = `
+    width:${s}px;
+    height:${s}px;
+    left:${Math.random()*100}%;
+    animation-duration:${9+Math.random()*12}s;
+    animation-delay:${Math.random()*10}s;
+  `;
 
-bg.appendChild(p);
+  bg.appendChild(p);
 
 }
 
 
 /* =========================================================
    COUNTDOWN
-   ========================================================= */
+========================================================= */
 
 function updateCountdown(){
 
-const diff =
-new Date(
-'2026-05-16T00:00:00-03:00'
-).getTime()
--
-Date.now();
+  const target =
+    new Date(
+      '2026-05-16T00:00:00-03:00'
+    ).getTime();
 
-if(diff<=0)
-return;
+  const diff =
+    target - Date.now();
 
-const pad =
-n=>String(n).padStart(2,'0');
 
-const s =
-document.getElementById(
-'cdSecs'
-);
+  if(diff <= 0){
 
-s.textContent =
-pad(
-Math.floor(
-(diff%60000)/1000
-)
-);
+    document.getElementById(
+      'cdDays'
+    ).textContent = '00';
 
-s.classList.add('tick');
+    document.getElementById(
+      'cdHours'
+    ).textContent = '00';
 
-setTimeout(
-()=>{
-s.classList.remove('tick');
-},
-300
-);
+    document.getElementById(
+      'cdMins'
+    ).textContent = '00';
 
-document.getElementById(
-'cdDays'
-).textContent =
-pad(
-Math.floor(
-diff/86400000
-)
-);
+    document.getElementById(
+      'cdSecs'
+    ).textContent = '00';
 
-document.getElementById(
-'cdHours'
-).textContent =
-pad(
-Math.floor(
-(diff%86400000)/3600000
-)
-);
+    return;
 
-document.getElementById(
-'cdMins'
-).textContent =
-pad(
-Math.floor(
-(diff%3600000)/60000
-)
-);
+  }
+
+
+  const pad =
+    n => String(n).padStart(2,'0');
+
+
+  document.getElementById(
+    'cdSecs'
+  ).textContent =
+    pad(
+      Math.floor(
+        (diff % 60000) / 1000
+      )
+    );
+
+
+  document.getElementById(
+    'cdDays'
+  ).textContent =
+    pad(
+      Math.floor(
+        diff / 86400000
+      )
+    );
+
+
+  document.getElementById(
+    'cdHours'
+  ).textContent =
+    pad(
+      Math.floor(
+        (diff % 86400000) /
+        3600000
+      )
+    );
+
+
+  document.getElementById(
+    'cdMins'
+  ).textContent =
+    pad(
+      Math.floor(
+        (diff % 3600000) /
+        60000
+      )
+    );
 
 }
+
 
 updateCountdown();
 
 setInterval(
-updateCountdown,
-1000
+  updateCountdown,
+  1000
 );
 
 
 /* =========================================================
-   CONTADOR
-   ========================================================= */
+   COUNTER
+========================================================= */
 
 function animCount(
-el,
-target,
-dur
+  el,
+  target,
+  dur
 ){
 
-let s=0;
+  let start = null;
 
-const step=ts=>{
+  function step(timestamp){
 
-if(!s)
-s=ts;
+    if(!start)
+      start = timestamp;
 
-const p=
-Math.min(
-(ts-s)/dur,
-1
-);
+    const progress =
+      Math.min(
+        (timestamp-start)/dur,
+        1
+      );
 
-el.textContent=
-Math.floor(
-(1-Math.pow(1-p,3))
-*target
-);
+    const value =
+      Math.floor(
+        (1-Math.pow(
+          1-progress,
+          3
+        )) * target
+      );
 
-if(p<1){
+    el.textContent =
+      value;
 
-requestAnimationFrame(
-step
-);
 
-}else{
+    if(progress < 1){
 
-el.textContent=
-target;
+      requestAnimationFrame(
+        step
+      );
 
-}
+    }else{
 
-};
+      el.textContent =
+        target;
 
-requestAnimationFrame(
-step
-);
+    }
+
+  }
+
+  requestAnimationFrame(
+    step
+  );
 
 }
 
 
 /* =========================================================
    REVEAL
-   ========================================================= */
+========================================================= */
 
 const obs =
-new IntersectionObserver(
-es=>es.forEach(
-e=>{
+  new IntersectionObserver(
+    entries => {
 
-if(e.isIntersecting){
+      entries.forEach(
+        entry => {
 
-e.target
-.classList
-.add('visible');
+          if(
+            entry.isIntersecting
+          ){
 
-const uc =
-e.target.querySelector(
-'#unitsCounter'
-);
+            entry.target
+              .classList
+              .add('visible');
 
-if(uc)
-animCount(
-uc,
-50,
-1400
-);
 
-obs.unobserve(
-e.target
-);
+            const counter =
+              entry.target
+                .querySelector(
+                  '#unitsCounter'
+                );
 
-}
 
-}
-),
-{
-threshold:.08
-}
-);
+            if(counter){
+
+              animCount(
+                counter,
+                50,
+                1400
+              );
+
+            }
+
+
+            obs.unobserve(
+              entry.target
+            );
+
+          }
+
+        }
+      );
+
+    },
+    {
+      threshold:0.08
+    }
+  );
+
 
 document
-.querySelectorAll('.reveal')
-.forEach(
-r=>obs.observe(r)
+  .querySelectorAll('.reveal')
+  .forEach(
+    element =>
+      obs.observe(element)
+  );
+
+
+/* =========================================================
+   BLOQUEOS BÁSICOS
+========================================================= */
+
+document.addEventListener(
+  'contextmenu',
+  e => e.preventDefault()
+);
+
+document.addEventListener(
+  'keydown',
+  function(e){
+
+    if(e.key === 'F12')
+      e.preventDefault();
+
+    if(
+      e.ctrlKey &&
+      e.shiftKey &&
+      ['I','J','C'].includes(
+        e.key.toUpperCase()
+      )
+    ){
+
+      e.preventDefault();
+
+    }
+
+  }
 );
 
 </script>
