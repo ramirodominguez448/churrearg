@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Drop #01 · La Pegajosa — CHURREARG</title>
+<title>CHURREARG · Drop #02 — La Crema · Próximamente</title>
 
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
@@ -14,14 +14,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 
-<!-- SUPABASE -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
-
-/* =========================================================
-   VARIABLES
-========================================================= */
 
 :root{
   --black:#000;
@@ -32,6 +25,7 @@
   --smoke:#111;
   --text:#e8e8e8;
   --muted:#666;
+  --red:#b66;
 }
 
 *{
@@ -59,10 +53,6 @@ body{
     cursor:auto;
   }
 }
-
-/* =========================================================
-   CURSOR
-========================================================= */
 
 .cursor{
   width:10px;
@@ -95,10 +85,6 @@ body{
   }
 }
 
-/* =========================================================
-   TEXTURE
-========================================================= */
-
 body::before{
   content:'';
   position:fixed;
@@ -109,9 +95,7 @@ body::before{
   opacity:.4;
 }
 
-/* =========================================================
-   ACCESS GATE
-========================================================= */
+/* ACCESS GATE — VERIFICACION DE EDAD */
 
 #access-gate{
   position:fixed;
@@ -135,12 +119,7 @@ body::before{
   font-size:clamp(22px,6vw,32px);
   font-weight:900;
   letter-spacing:.12em;
-  background:linear-gradient(
-    135deg,
-    #e8c96e,
-    #C9A84C,
-    #9a7a30
-  );
+  background:linear-gradient(135deg,#e8c96e,#C9A84C,#9a7a30);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   background-clip:text;
@@ -176,34 +155,14 @@ body::before{
 .access-form{
   width:100%;
   max-width:320px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
 }
 
-#vipCode{
-  width:100%;
-  padding:18px;
-  margin-bottom:12px;
-  background:#111;
-  border:1px solid rgba(201,168,76,.3);
-  color:#fff;
-  text-align:center;
-  font-family:'Montserrat',sans-serif;
-  font-size:11px;
-  letter-spacing:.25em;
-  outline:none;
-  text-transform:uppercase;
-}
-
-#vipCode:focus{
-  border-color:#C9A84C;
-  box-shadow:0 0 20px rgba(201,168,76,.08);
-}
-
-#accessBtn{
+.age-btn{
   width:100%;
   padding:18px 24px;
-  border:1px solid #C9A84C;
-  background:transparent;
-  color:#C9A84C;
   cursor:pointer;
   font-family:'Montserrat',sans-serif;
   font-size:10px;
@@ -213,14 +172,26 @@ body::before{
   transition:.3s;
 }
 
-#accessBtn:hover{
-  background:#C9A84C;
+#ageYes{
+  border:1px solid var(--gold);
+  background:transparent;
+  color:var(--gold);
+}
+
+#ageYes:hover{
+  background:var(--gold);
   color:#000;
 }
 
-#accessBtn:disabled{
-  opacity:.4;
-  cursor:wait;
+#ageNo{
+  border:1px solid rgba(255,255,255,.12);
+  background:transparent;
+  color:#555;
+}
+
+#ageNo:hover{
+  border-color:rgba(255,255,255,.3);
+  color:#888;
 }
 
 #accessMessage{
@@ -233,11 +204,11 @@ body::before{
 }
 
 #accessMessage.error{
-  color:#b66;
+  color:var(--red);
 }
 
 #accessMessage.success{
-  color:#C9A84C;
+  color:var(--gold);
 }
 
 .ag-legal{
@@ -253,33 +224,7 @@ body::before{
   padding:0 16px;
 }
 
-/* =========================================================
-   USER BADGE
-========================================================= */
-
-#userBadge{
-  position:fixed;
-  top:20px;
-  right:20px;
-  z-index:5000;
-  padding:10px 14px;
-  border:1px solid rgba(201,168,76,.2);
-  background:rgba(0,0,0,.75);
-  backdrop-filter:blur(10px);
-  font-size:8px;
-  letter-spacing:.18em;
-  color:var(--gold);
-  text-transform:uppercase;
-  display:none;
-}
-
-#userBadge.visible{
-  display:block;
-}
-
-/* =========================================================
-   HERO
-========================================================= */
+/* HERO */
 
 .hero{
   min-height:100svh;
@@ -297,12 +242,7 @@ body::before{
   content:'';
   position:absolute;
   inset:0;
-  background:
-    radial-gradient(
-      ellipse 75% 55% at 50% 50%,
-      rgba(201,168,76,.08) 0%,
-      transparent 65%
-    );
+  background:radial-gradient(ellipse 75% 55% at 50% 50%,rgba(201,168,76,.08) 0%,transparent 65%);
 }
 
 .smoke-bg{
@@ -316,47 +256,29 @@ body::before{
   position:absolute;
   bottom:-100px;
   border-radius:50%;
-  background:
-    radial-gradient(
-      circle,
-      rgba(201,168,76,.045) 0%,
-      transparent 70%
-    );
+  background:radial-gradient(circle,rgba(201,168,76,.045) 0%,transparent 70%);
   animation:spRise linear infinite;
 }
 
 @keyframes spRise{
-  0%{
-    transform:translateY(0) scale(.4);
-    opacity:0;
-  }
-
-  10%{
-    opacity:1;
-  }
-
-  90%{
-    opacity:.15;
-  }
-
-  100%{
-    transform:
-      translateY(-110vh)
-      translateX(20px)
-      scale(2.5);
-    opacity:0;
-  }
+  0%{transform:translateY(0) scale(.4);opacity:0;}
+  10%{opacity:1;}
+  90%{opacity:.15;}
+  100%{transform:translateY(-110vh) translateX(20px) scale(2.5);opacity:0;}
 }
 
-.hero-eyebrow{
-  font-size:clamp(9px,2vw,11px);
-  letter-spacing:.5em;
-  text-transform:uppercase;
+.hero-badge{
+  display:inline-block;
+  padding:6px 16px;
+  border:1px solid var(--gold);
   color:var(--gold);
+  font-size:clamp(9px,2vw,11px);
+  letter-spacing:.4em;
+  text-transform:uppercase;
   font-weight:600;
-  margin-bottom:clamp(24px,4vw,36px);
+  margin-bottom:clamp(20px,3vw,30px);
   opacity:0;
-  animation:fadeUp .7s ease .2s forwards;
+  animation:fadeUp .7s ease .1s forwards;
 }
 
 .hero-brand{
@@ -398,13 +320,7 @@ body::before{
   font-weight:900;
   line-height:.92;
   letter-spacing:-.02em;
-  background:
-    linear-gradient(
-      135deg,
-      var(--gold-light) 0%,
-      var(--gold) 45%,
-      var(--gold-dark) 100%
-    );
+  background:linear-gradient(135deg,var(--gold-light) 0%,var(--gold) 45%,var(--gold-dark) 100%);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   background-clip:text;
@@ -428,32 +344,18 @@ body::before{
 .hero-line{
   width:1px;
   height:clamp(48px,7vw,70px);
-  background:
-    linear-gradient(
-      to bottom,
-      var(--gold),
-      transparent
-    );
+  background:linear-gradient(to bottom,var(--gold),transparent);
   margin-top:clamp(36px,5vw,50px);
   opacity:0;
   animation:fadeUp .7s ease 1.2s forwards;
 }
 
 @keyframes fadeUp{
-  from{
-    opacity:0;
-    transform:translateY(26px);
-  }
-
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
+  from{opacity:0;transform:translateY(26px);}
+  to{opacity:1;transform:translateY(0);}
 }
 
-/* =========================================================
-   LAYOUT
-========================================================= */
+/* LAYOUT */
 
 .divider{
   display:flex;
@@ -478,8 +380,7 @@ body::before{
 }
 
 .section{
-  padding:clamp(52px,7vw,88px)
-           clamp(16px,4vw,24px);
+  padding:clamp(52px,7vw,88px) clamp(16px,4vw,24px);
   max-width:1000px;
   margin:0 auto;
 }
@@ -502,181 +403,59 @@ body::before{
   margin-bottom:clamp(24px,4vw,44px);
 }
 
-/* =========================================================
-   UNITS
-========================================================= */
+/* MYSTERY TEASER */
 
-.units-wrap{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-bottom:clamp(24px,4vw,36px);
-}
-
-.units-block{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding:0 clamp(16px,5vw,64px);
-}
-
-.units-num{
-  font-family:'Cinzel',serif;
-  font-size:clamp(52px,13vw,112px);
-  font-weight:900;
-  line-height:1;
-  background:
-    linear-gradient(
-      135deg,
-      var(--gold-light),
-      var(--gold),
-      var(--gold-dark)
-    );
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-  letter-spacing:-.03em;
-}
-
-.units-sub{
-  font-size:clamp(8px,1.5vw,10px);
-  letter-spacing:.38em;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin-top:6px;
-  font-weight:600;
-}
-
-.units-div-v{
-  width:1px;
-  height:clamp(60px,10vw,88px);
-  background:rgba(201,168,76,.15);
-}
-
-.units-desc{
-  font-family:'Playfair Display',serif;
-  font-style:italic;
-  font-size:clamp(13px,2.5vw,18px);
-  color:rgba(232,232,232,.3);
-  max-width:460px;
-  margin:0 auto clamp(22px,4vw,32px);
-  line-height:1.7;
-  text-align:center;
-}
-
-.bar-wrap{
-  max-width:clamp(280px,60vw,460px);
-  margin:0 auto;
-}
-
-.bar-labels{
-  display:flex;
-  justify-content:space-between;
-  font-size:clamp(8px,1.5vw,10px);
-  letter-spacing:.2em;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin-bottom:8px;
-}
-
-.bar-track{
-  width:100%;
-  height:1px;
-  background:rgba(201,168,76,.1);
-  overflow:hidden;
-}
-
-.bar-fill{
-  height:100%;
-  background:
-    linear-gradient(
-      to right,
-      var(--gold-dark),
-      var(--gold-light)
-    );
-  width:0%;
-  animation:fillBar 2.5s ease 1.5s forwards;
-}
-
-@keyframes fillBar{
-  to{
-    width:100%;
-  }
-}
-
-/* =========================================================
-   COUNTDOWN
-========================================================= */
-
-.countdown{
-  padding:clamp(52px,7vw,80px)
-           clamp(16px,4vw,24px);
-  max-width:1000px;
+.teaser-section{
+  padding:clamp(52px,7vw,80px) clamp(16px,4vw,24px);
+  max-width:680px;
   margin:0 auto;
   text-align:center;
-  border-top:1px solid rgba(201,168,76,.08);
 }
 
-.cd-date{
-  font-family:'Playfair Display',serif;
-  font-style:italic;
-  font-size:clamp(12px,2.5vw,17px);
-  color:var(--muted);
-  margin-bottom:clamp(28px,5vw,46px);
-}
-
-.cd-grid{
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
-}
-
-.cd-unit{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding:0 clamp(6px,3vw,38px);
-}
-
-.cd-num{
+.teaser-title{
   font-family:'Cinzel',serif;
-  font-size:clamp(36px,10vw,90px);
+  font-size:clamp(22px,5vw,38px);
   font-weight:900;
-  line-height:1;
   color:#fff;
-  letter-spacing:-.02em;
-  transition:color .3s;
+  line-height:1.15;
+  margin-bottom:12px;
 }
 
-.cd-num.tick{
-  color:var(--gold-light);
-}
-
-.cd-label{
-  font-size:clamp(8px,1.5vw,9px);
-  letter-spacing:.38em;
-  text-transform:uppercase;
+.teaser-sub{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:clamp(13px,2.5vw,17px);
   color:var(--muted);
-  margin-top:8px;
-  font-weight:600;
+  margin-bottom:clamp(24px,4vw,36px);
+  line-height:1.6;
 }
 
-.cd-sep{
-  font-family:'Cinzel',serif;
-  font-size:clamp(28px,8vw,68px);
-  font-weight:900;
-  color:rgba(201,168,76,.15);
-  padding-top:3px;
-  align-self:flex-start;
+.teaser-dots{
+  display:flex;
+  justify-content:center;
+  gap:10px;
 }
 
-/* =========================================================
-   SPECS
-========================================================= */
+.teaser-dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:rgba(201,168,76,.25);
+  animation:dotPulse 1.8s ease infinite;
+}
+
+.teaser-dot:nth-child(2){animation-delay:.3s;}
+.teaser-dot:nth-child(3){animation-delay:.6s;}
+
+@keyframes dotPulse{
+  0%,100%{opacity:.25;transform:scale(1);}
+  50%{opacity:1;transform:scale(1.3);}
+}
+
+/* SPECS */
 
 .specs-section{
-  padding:clamp(52px,7vw,80px)
-           clamp(16px,4vw,24px);
+  padding:clamp(52px,7vw,80px) clamp(16px,4vw,24px);
   max-width:1000px;
   margin:0 auto;
   border-top:1px solid rgba(201,168,76,.08);
@@ -689,17 +468,14 @@ body::before{
 }
 
 @media(max-width:540px){
-  .specs-grid{
-    grid-template-columns:1fr;
-  }
+  .specs-grid{grid-template-columns:1fr;}
 }
 
 .spec-row{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:clamp(16px,2.5vw,20px)
-           clamp(14px,2.5vw,22px);
+  padding:clamp(16px,2.5vw,20px) clamp(14px,2.5vw,22px);
   background:var(--smoke);
   border:1px solid rgba(201,168,76,.06);
   transition:border-color .3s,background .3s;
@@ -736,57 +512,46 @@ body::before{
   filter:blur(0);
 }
 
-/* =========================================================
-   ABOUT
-========================================================= */
+/* ARCHIVE — DROP 01 (compacto) */
 
-.about-block{
-  background:var(--carbon);
-  border:1px solid rgba(201,168,76,.13);
-  padding:clamp(24px,4vw,48px);
-  position:relative;
-  overflow:hidden;
+.archive-section{
+  padding:clamp(48px,6vw,70px) clamp(16px,4vw,24px);
+  max-width:760px;
+  margin:0 auto;
+  border-top:1px solid rgba(201,168,76,.08);
 }
 
-.about-block::before{
-  content:'01';
-  position:absolute;
-  right:clamp(12px,3vw,30px);
-  top:clamp(10px,2vw,20px);
-  font-family:'Cinzel',serif;
-  font-size:clamp(60px,12vw,120px);
-  font-weight:900;
-  color:rgba(201,168,76,.04);
-  line-height:1;
-  pointer-events:none;
-}
-
-.about-text{
-  font-size:clamp(13px,2.2vw,17px);
-  line-height:1.9;
-  color:#999;
-}
-
-.about-text strong{
-  color:var(--gold);
+.archive-badge{
+  display:inline-block;
+  padding:4px 12px;
+  border:1px solid var(--red);
+  color:var(--red);
+  font-size:clamp(8px,1.5vw,9px);
+  letter-spacing:.3em;
+  text-transform:uppercase;
   font-weight:600;
-}
-
-.about-text p{
   margin-bottom:14px;
 }
 
-.about-text p:last-child{
-  margin-bottom:0;
+.archive-title{
+  font-family:'Cinzel',serif;
+  font-size:clamp(17px,3.5vw,26px);
+  font-weight:700;
+  color:#ccc;
+  margin-bottom:12px;
 }
 
-/* =========================================================
-   CTA
-========================================================= */
+.archive-text{
+  font-size:clamp(12px,2vw,14px);
+  line-height:1.8;
+  color:#777;
+  max-width:520px;
+}
+
+/* CTA */
 
 .cta-section{
-  padding:clamp(64px,9vw,100px)
-           clamp(16px,4vw,24px);
+  padding:clamp(64px,9vw,100px) clamp(16px,4vw,24px);
   max-width:680px;
   margin:0 auto;
   text-align:center;
@@ -815,8 +580,7 @@ body::before{
   display:inline-block;
   width:100%;
   max-width:320px;
-  padding:clamp(16px,3vw,20px)
-           clamp(24px,4vw,48px);
+  padding:clamp(16px,3vw,20px) clamp(24px,4vw,48px);
   background:transparent;
   border:1px solid var(--gold);
   color:var(--gold);
@@ -865,13 +629,10 @@ body::before{
   text-transform:uppercase;
 }
 
-/* =========================================================
-   FOOTER
-========================================================= */
+/* FOOTER */
 
 footer{
-  padding:clamp(36px,5vw,50px)
-           clamp(16px,4vw,24px);
+  padding:clamp(36px,5vw,50px) clamp(16px,4vw,24px);
   text-align:center;
   border-top:1px solid rgba(201,168,76,.08);
 }
@@ -880,12 +641,7 @@ footer{
   font-family:'Cinzel',serif;
   font-size:clamp(16px,4vw,20px);
   font-weight:900;
-  background:
-    linear-gradient(
-      135deg,
-      var(--gold-light),
-      var(--gold)
-    );
+  background:linear-gradient(135deg,var(--gold-light),var(--gold));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   background-clip:text;
@@ -900,16 +656,12 @@ footer{
   text-transform:uppercase;
 }
 
-/* =========================================================
-   REVEAL
-========================================================= */
+/* REVEAL */
 
 .reveal{
   opacity:0;
   transform:translateY(24px);
-  transition:
-    opacity .65s ease,
-    transform .65s ease;
+  transition:opacity .65s ease,transform .65s ease;
 }
 
 .reveal.visible{
@@ -917,132 +669,59 @@ footer{
   transform:translateY(0);
 }
 
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media(max-width:600px){
-
-  .units-wrap{
-    flex-direction:column;
-    gap:28px;
-  }
-
-  .units-div-v{
-    width:60px;
-    height:1px;
-  }
-
-  .cd-grid{
-    transform:scale(.85);
-  }
-
-  .spec-row{
-    gap:15px;
-  }
-
-}
-
 </style>
 </head>
 
 <body>
 
-<!-- =======================================================
-     ACCESS GATE
-======================================================= -->
+<!-- ACCESS GATE — VERIFICACION DE EDAD -->
 
 <div id="access-gate">
 
-  <div class="ag-logo">
-    CHURREARG
-  </div>
-
+  <div class="ag-logo">CHURREARG</div>
   <div class="ag-line"></div>
-
-  <div class="ag-title">
-    ACCESO PRIVADO
-  </div>
+  <div class="ag-title">VERIFICACIÓN DE EDAD</div>
 
   <p class="ag-sub">
-    Ingresá el código de acceso correspondiente
-    a tu unidad.
+    Este sitio contiene contenido exclusivo
+    para mayores de 18 años. Confirmá tu edad
+    para continuar.
   </p>
 
   <div class="access-form">
-
-    <input
-      type="text"
-      id="vipCode"
-      placeholder="CÓDIGO DE ACCESO"
-      autocomplete="off"
-      autocapitalize="characters"
-      maxlength="20"
-    >
-
-    <button id="accessBtn">
-      <span>INGRESAR</span>
-    </button>
-
+    <button id="ageYes" class="age-btn">SOY MAYOR DE 18</button>
+    <button id="ageNo" class="age-btn">SOY MENOR DE 18</button>
     <p id="accessMessage"></p>
-
   </div>
 
-  <div class="ag-legal">
-    CHURREARG™ · ACCESO PRIVADO
-  </div>
+  <div class="ag-legal">CHURREARG™ · VERIFICACIÓN DE EDAD</div>
 
 </div>
 
 
-<!-- =======================================================
-     USER BADGE
-======================================================= -->
-
-<div id="userBadge">
-  UNIDAD <span id="userUnit">---</span>
-</div>
-
-
-<!-- =======================================================
-     CURSOR
-======================================================= -->
+<!-- CURSOR -->
 
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
 
-<!-- =======================================================
-     HERO
-======================================================= -->
+<!-- HERO — DROP #02 · LA CREMA -->
 
 <div class="hero">
 
   <div class="smoke-bg" id="smokeBg"></div>
 
-  <div class="hero-eyebrow">
-    Lanzamiento Oficial · 16 de Mayo, 2026
-  </div>
+  <div class="hero-badge">Drop #02 · Próximamente</div>
 
-  <div class="hero-brand">
-    CHURREARG
-  </div>
+  <div class="hero-brand">CHURREARG</div>
+  <div class="hero-presenta">presenta</div>
+  <div class="hero-drop">Collector's Drop #02</div>
 
-  <div class="hero-presenta">
-    presenta
-  </div>
-
-  <div class="hero-drop">
-    Collector's Drop #01
-  </div>
-
-  <h1 class="hero-title">
-    La Pegajosa
-  </h1>
+  <h1 class="hero-title">La Crema</h1>
 
   <p class="hero-tagline">
-    Kit de edición limitada. Numerado.<br>
-    Sin reposición.
+    El próximo capítulo está en camino.<br>
+    Todavía sin fecha confirmada.
   </p>
 
   <div class="hero-line"></div>
@@ -1050,1026 +729,230 @@ footer{
 </div>
 
 
-<!-- =======================================================
-     DIVIDER
-======================================================= -->
-
 <div class="divider">
-
   <div class="divider-line"></div>
-
-  <div class="divider-sym">
-    ✦
-  </div>
-
+  <div class="divider-sym">✦</div>
   <div class="divider-line"></div>
-
 </div>
 
 
-<!-- =======================================================
-     UNIDADES
-======================================================= -->
+<!-- MISTERIO / TEASER -->
 
-<div
-  class="section reveal"
-  style="text-align:center;"
->
+<div class="teaser-section reveal">
 
-  <div class="sec-label">
-    Unidades Disponibles
-  </div>
+  <div class="sec-label" style="text-align:center;">Detalles</div>
 
-  <div class="units-wrap">
+  <h2 class="teaser-title">Todavía es un secreto.</h2>
 
-    <div class="units-block">
-
-      <div
-        class="units-num"
-        id="unitsCounter"
-      >
-        0
-      </div>
-
-      <div class="units-sub">
-        Unidades Totales
-      </div>
-
-    </div>
-
-    <div class="units-div-v"></div>
-
-    <div class="units-block">
-
-      <div
-        class="units-num"
-        style="
-          font-size:clamp(26px,8vw,62px);
-          line-height:1.3;
-        "
-      >
-        #001<br>
-        — #050
-      </div>
-
-      <div class="units-sub">
-        Numeradas Individualmente
-      </div>
-
-    </div>
-
-  </div>
-
-  <p class="units-desc">
-    Cada kit lleva su número.
-    No hay dos iguales.
-    No hay segunda vuelta.
+  <p class="teaser-sub">
+    Vamos a ir revelando información de a poco
+    a medida que se acerque el lanzamiento.
   </p>
 
-  <div class="bar-wrap">
-
-    <div class="bar-labels">
-      <span>Disponibilidad</span>
-      <span>Limitada</span>
-    </div>
-
-    <div class="bar-track">
-      <div class="bar-fill"></div>
-    </div>
-
+  <div class="teaser-dots">
+    <div class="teaser-dot"></div>
+    <div class="teaser-dot"></div>
+    <div class="teaser-dot"></div>
   </div>
 
 </div>
 
-
-<!-- =======================================================
-     DIVIDER
-======================================================= -->
 
 <div class="divider">
-
   <div class="divider-line"></div>
-
-  <div class="divider-sym">
-    ✦
-  </div>
-
+  <div class="divider-sym">✦</div>
   <div class="divider-line"></div>
-
 </div>
 
 
-<!-- =======================================================
-     COUNTDOWN
-======================================================= -->
-
-<div class="countdown reveal">
-
-  <div class="sec-label">
-    Cuenta Regresiva al Lanzamiento
-  </div>
-
-  <div class="cd-date">
-    16 de Mayo, 2026
-  </div>
-
-  <div class="cd-grid">
-
-    <div class="cd-unit">
-
-      <div
-        class="cd-num"
-        id="cdDays"
-      >
-        00
-      </div>
-
-      <div class="cd-label">
-        Días
-      </div>
-
-    </div>
-
-    <div class="cd-sep">
-      :
-    </div>
-
-    <div class="cd-unit">
-
-      <div
-        class="cd-num"
-        id="cdHours"
-      >
-        00
-      </div>
-
-      <div class="cd-label">
-        Horas
-      </div>
-
-    </div>
-
-    <div class="cd-sep">
-      :
-    </div>
-
-    <div class="cd-unit">
-
-      <div
-        class="cd-num"
-        id="cdMins"
-      >
-        00
-      </div>
-
-      <div class="cd-label">
-        Minutos
-      </div>
-
-    </div>
-
-    <div class="cd-sep">
-      :
-    </div>
-
-    <div class="cd-unit">
-
-      <div
-        class="cd-num"
-        id="cdSecs"
-      >
-        00
-      </div>
-
-      <div class="cd-label">
-        Segundos
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- =======================================================
-     DIVIDER
-======================================================= -->
-
-<div class="divider">
-
-  <div class="divider-line"></div>
-
-  <div class="divider-sym">
-    ✦
-  </div>
-
-  <div class="divider-line"></div>
-
-</div>
-
-
-<!-- =======================================================
-     SPECS
-======================================================= -->
+<!-- SPECS PREVIEW — DROP #02 -->
 
 <div class="specs-section reveal">
 
-  <div class="sec-label">
-    El Drop
-  </div>
+  <div class="sec-label">Drop #02</div>
 
   <h2 class="sec-title">
-    No es un producto.<br>
-    Es un estándar.
+    Lo que se viene<br>
+    lleva nombre propio.
   </h2>
 
   <div class="specs-grid">
 
     <div class="spec-row">
-      <span class="spec-key">
-        Drop
-      </span>
-
-      <span class="spec-val">
-        #01 — La Pegajosa
-      </span>
+      <span class="spec-key">Drop</span>
+      <span class="spec-val">#02 — La Crema</span>
     </div>
 
     <div class="spec-row">
-      <span class="spec-key">
-        Edición
-      </span>
-
-      <span class="spec-val">
-        Limitada · 50 unidades
-      </span>
+      <span class="spec-key">Estado</span>
+      <span class="spec-val">Próximamente</span>
     </div>
 
     <div class="spec-row">
-      <span class="spec-key">
-        Numeración
-      </span>
-
-      <span class="spec-val">
-        #001 al #050
-      </span>
+      <span class="spec-key">Fecha</span>
+      <span class="spec-val blur">— — — —</span>
     </div>
 
     <div class="spec-row">
-      <span class="spec-key">
-        Reposición
-      </span>
-
-      <span class="spec-val">
-        No
-      </span>
+      <span class="spec-key">Edición</span>
+      <span class="spec-val blur">— — — —</span>
     </div>
 
     <div class="spec-row">
-      <span class="spec-key">
-        Lanzamiento
-      </span>
-
-      <span class="spec-val">
-        16 de Mayo, 2026
-      </span>
+      <span class="spec-key">Numeración</span>
+      <span class="spec-val blur">— — — —</span>
     </div>
 
     <div class="spec-row">
-      <span class="spec-key">
-        Contenido
-      </span>
-
-      <span class="spec-val blur">
-        — — — — —
-      </span>
+      <span class="spec-key">Contenido</span>
+      <span class="spec-val blur">— — — — —</span>
     </div>
 
   </div>
 
 </div>
 
-
-<!-- =======================================================
-     DIVIDER
-======================================================= -->
 
 <div class="divider">
-
   <div class="divider-line"></div>
-
-  <div class="divider-sym">
-    ✦
-  </div>
-
+  <div class="divider-sym">✦</div>
   <div class="divider-line"></div>
-
 </div>
 
 
-<!-- =======================================================
-     ABOUT
-======================================================= -->
+<!-- ARCHIVO — DROP #01 (compacto, secundario) -->
 
-<div class="section reveal">
+<div class="archive-section reveal">
 
-  <div class="sec-label">
-    La Pegajosa
-  </div>
+  <div class="sec-label">Archivo</div>
 
-  <h2 class="sec-title">
-    Inspirada en lo que se siente,<br>
-    no en lo que se ve.
-  </h2>
+  <div class="archive-badge">Agotado</div>
 
-  <div class="about-block">
+  <h3 class="archive-title">Drop #01 — La Pegajosa</h3>
 
-    <div class="about-text">
-
-      <p>
-        <strong>La Pegajosa Edition</strong>
-        está inspirada en perfiles de chocolate
-        intensos, notas profundas y una textura
-        característica que destaca por su
-        elaboración y presentación.
-      </p>
-
-      <p>
-        Un homenaje a una cultura que valora
-        el detalle, la calidad extrema y las
-        experiencias auténticas.
-      </p>
-
-      <p>
-        <strong>CHURREARG™</strong>
-        es una marca diseñada para quienes
-        buscan experiencias premium, coleccionables
-        y con identidad propia.
-      </p>
-
-    </div>
-
-  </div>
+  <p class="archive-text">
+    Edición limitada de 50 unidades numeradas
+    (#001 — #050). Sin reposición. Agotado en
+    su totalidad. El próximo capítulo ya está
+    en camino.
+  </p>
 
 </div>
 
-
-<!-- =======================================================
-     DIVIDER
-======================================================= -->
 
 <div class="divider">
-
   <div class="divider-line"></div>
-
-  <div class="divider-sym">
-    ✦
-  </div>
-
+  <div class="divider-sym">✦</div>
   <div class="divider-line"></div>
-
 </div>
 
 
-<!-- =======================================================
-     CTA
-======================================================= -->
+<!-- CTA -->
 
 <div class="cta-section reveal">
 
-  <div class="sec-label">
-    Acceso Limitado
-  </div>
+  <div class="sec-label">Mantenete Cerca</div>
 
-  <h2 class="cta-title">
-    ¿Querés el tuyo?
-  </h2>
+  <h2 class="cta-title">No te pierdas La Crema.</h2>
 
   <p class="cta-sub">
-    El acceso es por orden de llegada.<br>
-    Las unidades no esperan.
+    El anuncio va a salir primero por acá.<br>
+    Seguinos para enterarte apenas se confirme.
   </p>
 
-  <a
-    href="https://www.instagram.com/churrearg"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="cta-btn"
-  >
-    <span>
-      Escribinos por Instagram
-    </span>
+  <a href="https://www.instagram.com/churrearg" target="_blank" rel="noopener noreferrer" class="cta-btn">
+    <span>Seguinos en Instagram</span>
   </a>
 
-  <p class="cta-note">
-    @churrearg · Solo por DM
-  </p>
+  <p class="cta-note">@churrearg · Anuncios exclusivos</p>
 
 </div>
 
 
-<!-- =======================================================
-     FOOTER
-======================================================= -->
+<!-- FOOTER -->
 
 <footer>
-
-  <div class="footer-brand">
-    CHURREARG
-  </div>
-
-  <div class="footer-sub">
-    Accesorios Premium · Buenos Aires · Argentina
-  </div>
-
+  <div class="footer-brand">CHURREARG</div>
+  <div class="footer-sub">Accesorios Premium · Buenos Aires · Argentina</div>
 </footer>
 
 
 <script>
 
-/* =========================================================
-   SUPABASE CONFIG
-========================================================= */
+const accessGate = document.getElementById('access-gate');
+const ageYesBtn = document.getElementById('ageYes');
+const ageNoBtn = document.getElementById('ageNo');
+const accessMessage = document.getElementById('accessMessage');
 
-const SUPABASE_URL =
-  'https://yfjqbonwpuuurxihpibk.supabase.co';
+const AGE_KEY = 'churrearg_age_verified';
 
-const SUPABASE_PUBLISHABLE_KEY =
-  'sb_publishable_KvjMn2_OAYWGw_B3N-0-KA_zD86Akbk';
-
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-  );
-
-
-/* =========================================================
-   ELEMENTOS
-========================================================= */
-
-const accessGate =
-  document.getElementById('access-gate');
-
-const vipCode =
-  document.getElementById('vipCode');
-
-const accessBtn =
-  document.getElementById('accessBtn');
-
-const accessMessage =
-  document.getElementById('accessMessage');
-
-const userBadge =
-  document.getElementById('userBadge');
-
-const userUnit =
-  document.getElementById('userUnit');
-
-
-/* =========================================================
-   NORMALIZAR CÓDIGO
-========================================================= */
-
-function normalizeCode(code){
-
-  return code
-    .trim()
-    .toUpperCase()
-    .replace(/\s+/g,'');
-
+function unlockSite(){
+  accessMessage.textContent = 'ACCESO AUTORIZADO.';
+  accessMessage.className = 'success';
+  try{ localStorage.setItem(AGE_KEY, '1'); }catch(e){}
+  setTimeout(() => {
+    accessGate.classList.add('hidden');
+    document.body.style.overflow = '';
+  }, 400);
 }
 
+function rejectSite(){
+  ageYesBtn.disabled = true;
+  ageNoBtn.disabled = true;
+  accessMessage.textContent = 'DEBÉS SER MAYOR DE 18 AÑOS PARA INGRESAR.';
+  accessMessage.className = 'error';
+  setTimeout(() => { window.location.href = 'https://www.google.com'; }, 1500);
+}
 
-/* =========================================================
-   ACCESO
-========================================================= */
+ageYesBtn.addEventListener('click', unlockSite);
+ageNoBtn.addEventListener('click', rejectSite);
 
-async function validarCodigo(){
-
-  const code =
-    normalizeCode(vipCode.value);
-
-  if(!code){
-
-    accessMessage.textContent =
-      'INGRESÁ UN CÓDIGO DE ACCESO.';
-
-    accessMessage.className =
-      'error';
-
-    return;
-  }
-
-
-  accessBtn.disabled = true;
-
-  accessMessage.textContent =
-    'VERIFICANDO CÓDIGO...';
-
-  accessMessage.className =
-    '';
-
-
+window.addEventListener('load', function(){
   try{
-
-    /*
-      Esta función de Supabase:
-
-      1. Busca el código.
-      2. Comprueba que exista.
-      3. Registra fecha/hora.
-      4. Suma una visita.
-      5. Devuelve la unidad.
-    */
-
-    const { data, error } =
-      await supabaseClient
-        .rpc(
-          'registrar_acceso',
-          {
-            p_codigo: code
-          }
-        );
-
-
-    if(error){
-
-      console.error(
-        'Error Supabase:',
-        error
-      );
-
-      accessMessage.textContent =
-        'NO SE PUDO VERIFICAR EL CÓDIGO.';
-
-      accessMessage.className =
-        'error';
-
-      accessBtn.disabled = false;
-
-      return;
-    }
-
-
-    /*
-      Si no existe el código,
-      la función devuelve null.
-    */
-
-    if(!data || data.length === 0){
-
-      accessMessage.textContent =
-        'CÓDIGO INVÁLIDO.';
-
-      accessMessage.className =
-        'error';
-
-      accessBtn.disabled = false;
-
-      vipCode.value = '';
-
-      vipCode.focus();
-
-      return;
-    }
-
-
-    /*
-      Código correcto.
-    */
-
-    const usuario =
-      data[0];
-
-
-    accessMessage.textContent =
-      'ACCESO AUTORIZADO.';
-
-    accessMessage.className =
-      'success';
-
-
-    /*
-      Mostrar número de unidad.
-    */
-
-    if(usuario.unidad !== null){
-
-      userUnit.textContent =
-        String(usuario.unidad)
-          .padStart(3,'0');
-
-      userBadge.classList.add(
-        'visible'
-      );
-
-    }
-
-
-    /*
-      Pequeña pausa para
-      mostrar "ACCESO AUTORIZADO".
-    */
-
-    setTimeout(() => {
-
-      accessGate.classList.add(
-        'hidden'
-      );
-
+    if(localStorage.getItem(AGE_KEY) === '1'){
+      accessGate.classList.add('hidden');
       document.body.style.overflow = '';
-
-    }, 500);
-
-  }
-
-  catch(error){
-
-    console.error(error);
-
-    accessMessage.textContent =
-      'ERROR DE CONEXIÓN. INTENTÁ NUEVAMENTE.';
-
-    accessMessage.className =
-      'error';
-
-    accessBtn.disabled = false;
-
-  }
-
-}
-
-
-/* =========================================================
-   BOTÓN
-========================================================= */
-
-accessBtn.addEventListener(
-  'click',
-  validarCodigo
-);
-
-
-/* =========================================================
-   ENTER
-========================================================= */
-
-vipCode.addEventListener(
-  'keydown',
-  function(event){
-
-    if(event.key === 'Enter'){
-
-      event.preventDefault();
-
-      validarCodigo();
-
     }
+  }catch(e){}
+});
 
-  }
-);
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
 
-
-/* =========================================================
-   FOCUS AUTOMÁTICO
-========================================================= */
-
-window.addEventListener(
-  'load',
-  function(){
-
-    vipCode.focus();
-
-  }
-);
-
-
-/* =========================================================
-   CURSOR
-========================================================= */
-
-const cursor =
-  document.getElementById('cursor');
-
-const ring =
-  document.getElementById('cursorRing');
-
-let mx = 0;
-let my = 0;
-let rx = 0;
-let ry = 0;
-
-
-document.addEventListener(
-  'mousemove',
-  function(e){
-
-    mx = e.clientX;
-    my = e.clientY;
-
-    cursor.style.left =
-      mx + 'px';
-
-    cursor.style.top =
-      my + 'px';
-
-  }
-);
-
+document.addEventListener('mousemove', function(e){
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+});
 
 (function animateCursor(){
-
   rx += (mx-rx)*0.12;
   ry += (my-ry)*0.12;
-
-  ring.style.left =
-    rx + 'px';
-
-  ring.style.top =
-    ry + 'px';
-
-  requestAnimationFrame(
-    animateCursor
-  );
-
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animateCursor);
 })();
 
-
-/* =========================================================
-   SMOKE
-========================================================= */
-
-const bg =
-  document.getElementById('smokeBg');
-
+const bg = document.getElementById('smokeBg');
 for(let i=0;i<9;i++){
-
-  const p =
-    document.createElement('div');
-
+  const p = document.createElement('div');
   p.classList.add('sp');
-
-  const s =
-    80 + Math.random()*200;
-
-  p.style.cssText = `
-    width:${s}px;
-    height:${s}px;
-    left:${Math.random()*100}%;
-    animation-duration:${9+Math.random()*12}s;
-    animation-delay:${Math.random()*10}s;
-  `;
-
+  const s = 80 + Math.random()*200;
+  p.style.cssText = `width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-duration:${9+Math.random()*12}s;animation-delay:${Math.random()*10}s;`;
   bg.appendChild(p);
-
 }
 
-
-/* =========================================================
-   COUNTDOWN
-========================================================= */
-
-function updateCountdown(){
-
-  const target =
-    new Date(
-      '2026-05-16T00:00:00-03:00'
-    ).getTime();
-
-  const diff =
-    target - Date.now();
-
-
-  if(diff <= 0){
-
-    document.getElementById(
-      'cdDays'
-    ).textContent = '00';
-
-    document.getElementById(
-      'cdHours'
-    ).textContent = '00';
-
-    document.getElementById(
-      'cdMins'
-    ).textContent = '00';
-
-    document.getElementById(
-      'cdSecs'
-    ).textContent = '00';
-
-    return;
-
-  }
-
-
-  const pad =
-    n => String(n).padStart(2,'0');
-
-
-  document.getElementById(
-    'cdSecs'
-  ).textContent =
-    pad(
-      Math.floor(
-        (diff % 60000) / 1000
-      )
-    );
-
-
-  document.getElementById(
-    'cdDays'
-  ).textContent =
-    pad(
-      Math.floor(
-        diff / 86400000
-      )
-    );
-
-
-  document.getElementById(
-    'cdHours'
-  ).textContent =
-    pad(
-      Math.floor(
-        (diff % 86400000) /
-        3600000
-      )
-    );
-
-
-  document.getElementById(
-    'cdMins'
-  ).textContent =
-    pad(
-      Math.floor(
-        (diff % 3600000) /
-        60000
-      )
-    );
-
-}
-
-
-updateCountdown();
-
-setInterval(
-  updateCountdown,
-  1000
-);
-
-
-/* =========================================================
-   COUNTER
-========================================================= */
-
-function animCount(
-  el,
-  target,
-  dur
-){
-
-  let start = null;
-
-  function step(timestamp){
-
-    if(!start)
-      start = timestamp;
-
-    const progress =
-      Math.min(
-        (timestamp-start)/dur,
-        1
-      );
-
-    const value =
-      Math.floor(
-        (1-Math.pow(
-          1-progress,
-          3
-        )) * target
-      );
-
-    el.textContent =
-      value;
-
-
-    if(progress < 1){
-
-      requestAnimationFrame(
-        step
-      );
-
-    }else{
-
-      el.textContent =
-        target;
-
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      obs.unobserve(entry.target);
     }
+  });
+}, { threshold:0.08 });
 
-  }
-
-  requestAnimationFrame(
-    step
-  );
-
-}
-
-
-/* =========================================================
-   REVEAL
-========================================================= */
-
-const obs =
-  new IntersectionObserver(
-    entries => {
-
-      entries.forEach(
-        entry => {
-
-          if(
-            entry.isIntersecting
-          ){
-
-            entry.target
-              .classList
-              .add('visible');
-
-
-            const counter =
-              entry.target
-                .querySelector(
-                  '#unitsCounter'
-                );
-
-
-            if(counter){
-
-              animCount(
-                counter,
-                50,
-                1400
-              );
-
-            }
-
-
-            obs.unobserve(
-              entry.target
-            );
-
-          }
-
-        }
-      );
-
-    },
-    {
-      threshold:0.08
-    }
-  );
-
-
-document
-  .querySelectorAll('.reveal')
-  .forEach(
-    element =>
-      obs.observe(element)
-  );
-
-
-/* =========================================================
-   BLOQUEOS BÁSICOS
-========================================================= */
-
-document.addEventListener(
-  'contextmenu',
-  e => e.preventDefault()
-);
-
-document.addEventListener(
-  'keydown',
-  function(e){
-
-    if(e.key === 'F12')
-      e.preventDefault();
-
-    if(
-      e.ctrlKey &&
-      e.shiftKey &&
-      ['I','J','C'].includes(
-        e.key.toUpperCase()
-      )
-    ){
-
-      e.preventDefault();
-
-    }
-
-  }
-);
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
 </script>
 
