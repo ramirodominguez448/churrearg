@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CHURREARG · Drop #02 — La Crema · Próximamente</title>
+<title>CHURREARG · Drop #02 — La Crema · Reserva Abierta</title>
 
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
@@ -24,8 +24,9 @@
   --carbon:#1e1e1e;
   --smoke:#111;
   --text:#e8e8e8;
-  --muted:#666;
-  --red:#b66;
+  --muted:#8c8c8c;
+  --red:#c47878;
+  --green:#8fbf8f;
 }
 
 *{
@@ -218,7 +219,7 @@ body::before{
   right:0;
   font-size:9px;
   letter-spacing:.18em;
-  color:#2a2a2a;
+  color:#4a4a4a;
   text-transform:uppercase;
   text-align:center;
   padding:0 16px;
@@ -270,8 +271,8 @@ body::before{
 .hero-badge{
   display:inline-block;
   padding:6px 16px;
-  border:1px solid var(--gold);
-  color:var(--gold);
+  border:1px solid var(--green);
+  color:var(--green);
   font-size:clamp(9px,2vw,11px);
   letter-spacing:.4em;
   text-transform:uppercase;
@@ -335,7 +336,7 @@ body::before{
   font-family:'Playfair Display',serif;
   font-style:italic;
   font-size:clamp(13px,2.5vw,20px);
-  color:rgba(232,232,232,.35);
+  color:rgba(232,232,232,.55);
   line-height:1.6;
   opacity:0;
   animation:fadeUp .7s ease 1s forwards;
@@ -403,7 +404,7 @@ body::before{
   margin-bottom:clamp(24px,4vw,44px);
 }
 
-/* MYSTERY TEASER */
+/* TEASER → AHORA REVELADO */
 
 .teaser-section{
   padding:clamp(52px,7vw,80px) clamp(16px,4vw,24px);
@@ -500,6 +501,7 @@ body::before{
   color:var(--gold);
   font-weight:700;
   letter-spacing:.04em;
+  text-align:right;
 }
 
 .spec-val.blur{
@@ -510,6 +512,10 @@ body::before{
 .spec-val.blur:hover,
 .spec-val.blur:active{
   filter:blur(0);
+}
+
+.spec-val.active{
+  color:var(--green);
 }
 
 /* ARCHIVE — DROP 01 (compacto) */
@@ -624,7 +630,7 @@ body::before{
 .cta-note{
   font-size:clamp(8px,1.5vw,10px);
   letter-spacing:.22em;
-  color:rgba(102,102,102,.5);
+  color:rgba(160,160,160,.75);
   margin-top:18px;
   text-transform:uppercase;
 }
@@ -711,7 +717,7 @@ footer{
 
   <div class="smoke-bg" id="smokeBg"></div>
 
-  <div class="hero-badge">Drop #02 · Próximamente</div>
+  <div class="hero-badge">Drop #02 · Reserva Abierta</div>
 
   <div class="hero-brand">CHURREARG</div>
   <div class="hero-presenta">presenta</div>
@@ -720,8 +726,8 @@ footer{
   <h1 class="hero-title">La Crema</h1>
 
   <p class="hero-tagline">
-    El próximo capítulo está en camino.<br>
-    Todavía sin fecha confirmada.
+    Cincuenta piezas numeradas.<br>
+    Reserva abierta. Fecha por confirmar.
   </p>
 
   <div class="hero-line"></div>
@@ -736,17 +742,19 @@ footer{
 </div>
 
 
-<!-- MISTERIO / TEASER -->
+<!-- REVELADO -->
 
 <div class="teaser-section reveal">
 
   <div class="sec-label" style="text-align:center;">Detalles</div>
 
-  <h2 class="teaser-title">Todavía es un secreto.</h2>
+  <h2 class="teaser-title">Ya podés asegurar tu lugar.</h2>
 
   <p class="teaser-sub">
-    Vamos a ir revelando información de a poco
-    a medida que se acerque el lanzamiento.
+    Una edición de cincuenta piezas numeradas,
+    trabajada con el mismo estándar de calidad
+    que define cada lanzamiento. Reservá antes
+    de que se agote.
   </p>
 
   <div class="teaser-dots">
@@ -765,15 +773,15 @@ footer{
 </div>
 
 
-<!-- SPECS PREVIEW — DROP #02 -->
+<!-- SPECS — DROP #02 -->
 
 <div class="specs-section reveal">
 
   <div class="sec-label">Drop #02</div>
 
   <h2 class="sec-title">
-    Lo que se viene<br>
-    lleva nombre propio.
+    Ficha técnica<br>
+    del drop.
   </h2>
 
   <div class="specs-grid">
@@ -785,27 +793,27 @@ footer{
 
     <div class="spec-row">
       <span class="spec-key">Estado</span>
-      <span class="spec-val">Próximamente</span>
+      <span class="spec-val active">Reserva Abierta</span>
     </div>
 
     <div class="spec-row">
-      <span class="spec-key">Fecha</span>
-      <span class="spec-val blur">— — — —</span>
+      <span class="spec-key">Fecha de entrega</span>
+      <span class="spec-val">A confirmar</span>
     </div>
 
     <div class="spec-row">
       <span class="spec-key">Edición</span>
-      <span class="spec-val blur">— — — —</span>
+      <span class="spec-val">50 unidades numeradas</span>
     </div>
 
     <div class="spec-row">
       <span class="spec-key">Numeración</span>
-      <span class="spec-val blur">— — — —</span>
+      <span class="spec-val">#001 — #050</span>
     </div>
 
     <div class="spec-row">
       <span class="spec-key">Contenido</span>
-      <span class="spec-val blur">— — — — —</span>
+      <span class="spec-val">1g · Live Rosin Premium</span>
     </div>
 
   </div>
@@ -851,20 +859,22 @@ footer{
 
 <div class="cta-section reveal">
 
-  <div class="sec-label">Mantenete Cerca</div>
+  <div class="sec-label">Reservá La Crema</div>
 
-  <h2 class="cta-title">No te pierdas La Crema.</h2>
+  <h2 class="cta-title">Cincuenta piezas. Sin reposición.</h2>
 
   <p class="cta-sub">
-    El anuncio va a salir primero por acá.<br>
-    Seguinos para enterarte apenas se confirme.
+    Escribinos por Instagram para asegurar tu
+    unidad numerada. La fecha de entrega se
+    confirma por mensaje directo apenas cierra
+    la reserva.
   </p>
 
   <a href="https://www.instagram.com/churrearg" target="_blank" rel="noopener noreferrer" class="cta-btn">
-    <span>Seguinos en Instagram</span>
+    <span>Reservar por DM</span>
   </a>
 
-  <p class="cta-note">@churrearg · Anuncios exclusivos</p>
+  <p class="cta-note">@churrearg · Reservas por mensaje directo</p>
 
 </div>
 
